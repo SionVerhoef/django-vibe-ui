@@ -1,0 +1,12 @@
+{% comment %}
+  vibe_ui button partial.
+  Rendered by {% vibe_button %} but also usable directly:
+    {% include "vibe_ui/button.html" with label="Save" variant="primary" %}
+{% endcomment %}
+{% spaceless %}
+{% if href %}
+  <a href="{{ href }}" class="btn btn-{{ variant }}{% if size %} btn-{{ size }}{% endif %}">{{ label }}</a>
+{% else %}
+  <button type="{{ type }}" class="btn btn-{{ variant }}{% if size %} btn-{{ size }}{% endif %}">{{ label }}</button>
+{% endif %}
+{% endspaceless %}

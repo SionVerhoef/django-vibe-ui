@@ -1,0 +1,35 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "django-vibe-ui"
+dynamic = ["version"]
+description = "Reusable Django UI: design tokens, CSS components, and template partials shared across sites."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Sion Verhoef" }]
+keywords = ["django", "ui", "design-system", "css", "components"]
+classifiers = [
+    "Framework :: Django",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+]
+dependencies = ["Django>=4.2"]
+
+[project.urls]
+Homepage = "https://github.com/SionVerhoef/django-vibe-ui"
+Repository = "https://github.com/SionVerhoef/django-vibe-ui"
+
+[tool.hatch.version]
+path = "src/vibe_ui/__init__.py"
+
+# Maps src/vibe_ui -> vibe_ui in the wheel. Hatchling includes ALL files under
+# the package (CSS + templates included) by default — no package_data needed.
+[tool.hatch.build.targets.wheel]
+packages = ["src/vibe_ui"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/vibe_ui", "README.md", "CHANGELOG.md", "LICENSE", "docs"]

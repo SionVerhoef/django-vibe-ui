@@ -1,0 +1,169 @@
+/* ===================================================================
+   Mobile Bottom Tab Bar — PixRemix v2.1
+   Fixed bottom navigation with 4 tabs
+   =================================================================== */
+
+.tab-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .tab-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--tab-bar-height) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--surface-white);
+    border-top: 1px solid var(--neutral-100);
+    z-index: var(--z-sticky);
+    align-items: stretch;
+    justify-content: space-around;
+    box-shadow: 0 -2px 8px rgba(28, 25, 23, 0.06);
+  }
+
+  .tab-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 2px;
+    padding: var(--space-2) 0;
+    color: var(--neutral-400);
+    font-size: 10px;
+    font-weight: var(--weight-medium);
+    transition: color var(--duration-fast) var(--ease-out);
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tab-bar-item svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .tab-bar-item.active {
+    color: var(--accent);
+  }
+
+  .tab-bar-item.active svg {
+    stroke-width: 2.5;
+  }
+
+  .tab-bar-item .tab-label {
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  /* Cart badge on tab bar */
+  .tab-bar-item .tab-badge {
+    position: absolute;
+    top: 4px;
+    right: calc(50% - 16px);
+    background: var(--accent);
+    color: var(--surface-white);
+    font-size: 9px;
+    font-weight: var(--weight-bold);
+    min-width: 16px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  /* Hide tab bar on focused conversion pages */
+  .page-progress .tab-bar,
+  .page-results .tab-bar {
+    display: none;
+  }
+
+  .page-progress body,
+  .page-results body {
+    padding-bottom: 0;
+  }
+}
+
+/* More menu (bottom sheet) */
+.more-sheet-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 25, 23, 0.4);
+  z-index: var(--z-overlay);
+  opacity: 0;
+  transition: opacity var(--duration-moderate) var(--ease-out);
+}
+
+.more-sheet-overlay.open {
+  display: block;
+  opacity: 1;
+}
+
+.more-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface-white);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  padding: var(--space-4) var(--space-6) calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-modal);
+  transform: translateY(100%);
+  transition: transform var(--duration-moderate) var(--ease-out);
+  max-height: 85vh;
+}
+
+.more-sheet.open {
+  transform: translateY(0);
+}
+
+.more-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--neutral-200);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-5);
+}
+
+.more-sheet-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.more-sheet-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--neutral-900);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.more-sheet-link:hover {
+  background: var(--neutral-50);
+  color: var(--neutral-900);
+}
+
+.more-sheet-link svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--neutral-400);
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

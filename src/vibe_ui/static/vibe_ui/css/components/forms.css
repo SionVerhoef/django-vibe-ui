@@ -1,0 +1,300 @@
+/* ===================================================================
+   Forms — PixRemix v2.1
+   Inputs, upload zone, selectors
+   =================================================================== */
+
+/* --- Base Form --- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+form.lang-switcher {
+  flex-direction: row;
+  gap: 2px;
+}
+
+/* --- Form Group --- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--neutral-900);
+}
+
+.form-label-required::after {
+  content: ' (required)';
+  font-weight: var(--weight-regular);
+  color: var(--neutral-400);
+  font-size: var(--text-xs);
+}
+
+/* --- Text Inputs --- */
+.form-input,
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+input[type="url"],
+textarea,
+select {
+  padding: var(--space-3) var(--space-4);
+  border: 1.5px solid var(--neutral-200);
+  border-radius: var(--radius-sm);
+  background: var(--surface-white);
+  font-size: var(--text-base);
+  color: var(--neutral-900);
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+  min-height: 44px;
+  width: 100%;
+}
+
+.form-input:hover,
+input[type="text"]:hover,
+input[type="email"]:hover,
+select:hover {
+  border-color: var(--neutral-400);
+}
+
+.form-input:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: var(--neutral-400);
+}
+
+/* --- Validation States --- */
+.form-input.is-valid {
+  border-color: var(--success);
+}
+
+.form-input.is-invalid {
+  border-color: var(--error);
+}
+
+.form-error {
+  font-size: var(--text-sm);
+  color: var(--error);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.form-success {
+  font-size: var(--text-sm);
+  color: var(--success);
+}
+
+/* --- Upload Zone --- */
+.upload-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-10) var(--space-6);
+  border: 2px dashed var(--neutral-200);
+  border-radius: var(--radius-xl);
+  background: var(--surface-cream);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  text-align: center;
+  min-height: 200px;
+}
+
+.upload-zone:hover,
+.upload-zone.dragover {
+  border-color: var(--accent);
+  background: var(--surface-warm);
+}
+
+.upload-zone-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-4);
+  stroke: var(--neutral-400);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.upload-zone.dragover .upload-zone-icon {
+  stroke: var(--accent);
+}
+
+.upload-zone-text {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--neutral-900);
+  margin-bottom: var(--space-1);
+}
+
+.upload-zone-hint {
+  font-size: var(--text-sm);
+  color: var(--neutral-400);
+}
+
+.upload-zone-browse {
+  color: var(--accent);
+  font-weight: var(--weight-semibold);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Upload preview */
+.upload-preview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4);
+  border: 2px solid var(--neutral-200);
+  border-radius: var(--radius-xl);
+  background: var(--surface-cream);
+}
+
+.upload-preview img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.upload-preview-change {
+  font-size: var(--text-sm);
+  color: var(--accent);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* --- Select (Dropdown) --- */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23A8A29E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  padding-right: var(--space-10);
+}
+
+/* --- File Input (hidden, using upload zone) --- */
+input[type="file"] {
+  display: none;
+}
+
+/* --- Style Selector Tiles --- */
+.style-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: var(--space-3);
+}
+
+.style-tile {
+  position: relative;
+  cursor: pointer;
+  border: none;
+  padding: var(--space-2);
+  background: transparent;
+  transition: transform var(--duration-normal) var(--ease-spring);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.style-tile:hover {
+  transform: scale(1.06);
+}
+
+.style-tile.selected {
+  transform: scale(1.10);
+}
+
+.style-tile img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.style-tile-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1) var(--space-3);
+  background: var(--surface-warm);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  font-family: var(--font-heading);
+  color: var(--neutral-900);
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: background var(--duration-normal) var(--ease-out),
+              color var(--duration-normal) var(--ease-out);
+}
+
+/* Hidden radio for style tiles */
+input.style-radio {
+  display: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input.style-radio:checked + .style-tile {
+  transform: scale(1.10);
+}
+
+input.style-radio:checked + .style-tile .style-tile-label {
+  background: var(--accent);
+  color: var(--surface-white);
+}
+
+/* --- Discount Code Input --- */
+.discount-input-group {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.discount-input-group input {
+  flex: 1;
+}
+
+.discount-input-group .btn {
+  flex-shrink: 0;
+}
+
+/* --- Alerts --- */
+.alert {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  border: 1px solid transparent;
+}
+
+.alert-success {
+  background: var(--color-alert-success-bg);
+  color: var(--color-alert-success-text);
+  border-color: var(--success);
+}
+
+.alert-danger, .alert-error {
+  background: var(--color-alert-error-bg);
+  color: var(--color-alert-error-text);
+  border-color: var(--error);
+}

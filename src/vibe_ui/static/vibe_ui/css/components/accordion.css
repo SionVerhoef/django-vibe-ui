@@ -1,0 +1,90 @@
+/* ===================================================================
+   Accordion / FAQ — pure-CSS disclosure built on <details>/<summary>
+   No JavaScript. Markup:
+
+   <section class="faq-section">
+     <h2>FAQ</h2>
+     <div class="faq-container">
+       <details class="faq-item">
+         <summary>Question?</summary>
+         <p class="faq-answer">Answer.</p>
+       </details>
+     </div>
+   </section>
+   =================================================================== */
+
+.faq-section {
+  max-width: var(--container-max);
+  width: 100%;
+  margin: var(--space-8) auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+.faq-section h2 {
+  text-align: center;
+  margin-bottom: var(--space-2);
+}
+
+.faq-section > p {
+  text-align: center;
+  color: var(--neutral-600);
+  margin-bottom: var(--space-6);
+}
+
+.faq-container {
+  display: grid;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.faq-item {
+  background: var(--surface-white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--neutral-100);
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.faq-item:hover {
+  border-color: var(--neutral-200);
+}
+
+.faq-item summary {
+  padding: var(--space-4) var(--space-5);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  cursor: pointer;
+  color: var(--neutral-900);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23A8A29E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='12' y1='5' x2='12' y2='19'%3E%3C/line%3E%3Cline x1='5' y1='12' x2='19' y2='12'%3E%3C/line%3E%3C/svg%3E");
+  background-size: contain;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item .faq-answer,
+.faq-item p {
+  padding: 0 var(--space-5) var(--space-5);
+  margin: 0;
+  line-height: var(--leading-relaxed);
+  color: var(--neutral-600);
+  font-size: var(--text-sm);
+}
