@@ -51,6 +51,14 @@ package, because it's the same source — **pixel-parity is trivially verifiable
 - [ ] Keep StickerVibez's `pages/*.css` loaded per page via `{% block extra_css %}`.
 - [ ] Visual diff key pages (home, styles, cart, upload, results) — confirm parity.
 - [ ] Delete the now-duplicated component/token CSS from StickerVibez.
+- [ ] **Trim app-specific CSS that came along in the extraction** (found while
+      building the demo): `components/modal.css` is actually StickerVibez's cart
+      drawer (`.cart-panel`/`.cart-overlay`), and `cards.css`/`forms.css` carry
+      StickerVibez-only classes (`.style-card`, `.trust-bar`, `.upload-zone`,
+      `.style-tiles`). Either move these back to StickerVibez's `pages/` CSS or
+      generalize them. The genuinely-generic pieces (`.btn`, `.card`, `.badge`,
+      `.form-*`, `.alert`, `.toast`, `.spinner`, `.progress-bar`, `.steps`,
+      accordion) are validated by `demo/index.html`.
 - [ ] Pin the version in `requirements.txt`.
 
 **Exit criteria:** StickerVibez renders identically while sourcing its design
