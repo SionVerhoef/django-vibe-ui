@@ -1,0 +1,37 @@
+/* ===================================================================
+   THEME OVERRIDE — example
+   -------------------------------------------------------------------
+   Copy this into your SITE's own static dir (NOT the package), e.g.
+   `static/css/theme.css`, set the brand levers you care about, and load
+   it AFTER vibe_ui's ui.css so these values win:
+
+     <link rel="stylesheet" href="{% static 'vibe_ui/css/ui.css' %}">
+     <link rel="stylesheet" href="{% static 'css/theme.css' %}">   <!-- this file -->
+
+   You only need to override the tokens you want to change — every
+   component reads these variables, so re-theming the whole UI is a
+   handful of lines. Leave the rest to the package defaults.
+   =================================================================== */
+
+:root {
+  /* --- Brand accent (the single biggest lever) --- */
+  --accent:       #2563EB;                      /* e.g. a blue brand    */
+  --accent-hover: #1D4ED8;
+  --accent-glow:  rgba(37, 99, 235, 0.20);
+  --shadow-glow:  0 0 20px rgba(37, 99, 235, 0.25);
+
+  /* --- Surfaces (page + card backgrounds) --- */
+  --surface-cream: #FFFFFF;                      /* neutral instead of warm */
+  --surface-warm:  #EFF6FF;
+
+  /* --- Typography (swap the type personality) --- */
+  --font-heading: 'Sora', 'Inter', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+
+  /* --- Shape language (rounded vs sharp) --- */
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  /* --- Motion (snappier / calmer) --- */
+  --duration-fast: 120ms;
+}

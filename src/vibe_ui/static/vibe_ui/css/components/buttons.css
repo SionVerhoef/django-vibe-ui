@@ -1,0 +1,222 @@
+/* ===================================================================
+   Buttons — PixRemix v2.1
+   Primary, secondary, ghost, icon variants
+   =================================================================== */
+
+/* --- Base Button --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  line-height: 1.4;
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--duration-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* --- Primary: White text on solid orange --- */
+.btn-primary,
+button.btn-primary,
+input[type="submit"],
+input[type="button"] {
+  background: var(--accent);
+  color: var(--surface-white);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover,
+button.btn-primary:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  box-shadow: var(--shadow-glow);
+  color: var(--surface-white);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active,
+button.btn-primary:active {
+  transform: scale(0.97);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --- Secondary: Orange outline, transparent fill --- */
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 140, 0, 0.06);
+  color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+/* --- Ghost: Text only, subtle hover --- */
+.btn-ghost {
+  background: transparent;
+  color: var(--neutral-600);
+  border-color: transparent;
+  padding: var(--space-2) var(--space-4);
+}
+
+.btn-ghost:hover {
+  background: var(--neutral-50);
+  color: var(--neutral-900);
+}
+
+/* --- Icon Button --- */
+.btn-icon {
+  background: transparent;
+  border: none;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  color: var(--neutral-600);
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.btn-icon:hover {
+  background: var(--neutral-50);
+  color: var(--neutral-900);
+}
+
+.btn-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --- Sizes --- */
+.btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  min-height: 36px;
+}
+
+.btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-lg);
+  min-height: 52px;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* --- Disabled --- */
+.btn:disabled,
+.btn[disabled],
+button:disabled,
+input[type="submit"]:disabled {
+  background: var(--neutral-200);
+  color: var(--neutral-400);
+  border-color: var(--neutral-200);
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  transform: none;
+}
+
+/* --- Loading State --- */
+.btn-loading {
+  pointer-events: none;
+  position: relative;
+  color: transparent !important;
+}
+
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--surface-white);
+  border-radius: 50%;
+  animation: btnSpin 0.6s linear infinite;
+}
+
+@keyframes btnSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Legacy compatibility */
+.btn-success {
+  background: var(--info);
+  color: var(--surface-white);
+  border-color: var(--info);
+}
+
+.btn-success:hover {
+  background: #059BBE;
+  border-color: #059BBE;
+}
+
+.btn-add-cart {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-base);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+}
+
+.btn-add-cart:hover {
+  background: rgba(255, 140, 0, 0.06);
+  border-color: var(--accent-hover);
+  color: var(--accent-hover);
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-add-cart:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cart-added-msg {
+  color: var(--success);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+  animation: cartFadeIn var(--duration-normal) var(--ease-out);
+}
+
+@keyframes cartFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.checkout-buttons {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,10 @@
+{% comment %}
+  vibe_ui card partial.
+  Rendered by {% vibe_card %} but also usable directly:
+    {% include "vibe_ui/card.html" with title="Plan" body="Details" %}
+{% endcomment %}
+{% if href %}<a href="{{ href }}" class="card card-link">{% else %}<div class="card">{% endif %}
+  {% if title %}<h3 class="card-title">{{ title }}</h3>{% endif %}
+  {% if body %}<div class="card-body">{{ body }}</div>{% endif %}
+  {% block card_content %}{% endblock %}
+{% if href %}</a>{% else %}</div>{% endif %}

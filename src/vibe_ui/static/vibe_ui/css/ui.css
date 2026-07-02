@@ -1,0 +1,44 @@
+/* ===================================================================
+   django-vibe-ui — entry stylesheet
+   Load this ONCE per page:  {% static 'vibe_ui/css/ui.css' %}
+
+   @layer order (lowest to highest specificity):
+   reset < base < layout < components < pages < utilities
+
+   THEMING: tokens below are package DEFAULTS. Override them per site by
+   loading your own tokens file AFTER this one (see tokens/overrides.example.css).
+   The `pages` layer is intentionally declared but empty here — your site's
+   page-specific CSS slots into it via {% block extra_css %}.
+   =================================================================== */
+
+@layer reset, base, layout, components, pages, utilities;
+
+/* --- Tokens (unlayered — available everywhere; site overrides win) --- */
+@import url('./tokens/_defaults.css');
+
+/* --- Reset --- */
+@import url('./base/reset.css') layer(reset);
+
+/* --- Base --- */
+@import url('./base/typography.css') layer(base);
+@import url('./base/accessibility.css') layer(base);
+
+/* --- Layout --- */
+@import url('./layout/container.css') layer(layout);
+@import url('./layout/header.css') layer(layout);
+@import url('./layout/navigation.css') layer(layout);
+@import url('./layout/footer.css') layer(layout);
+
+/* --- Components --- */
+@import url('./components/buttons.css') layer(components);
+@import url('./components/cards.css') layer(components);
+@import url('./components/forms.css') layer(components);
+@import url('./components/badges.css') layer(components);
+@import url('./components/modal.css') layer(components);
+@import url('./components/carousel.css') layer(components);
+@import url('./components/toast.css') layer(components);
+@import url('./components/progress.css') layer(components);
+@import url('./components/accordion.css') layer(components);
+
+/* --- Utilities --- */
+@import url('./utilities/helpers.css') layer(utilities);

@@ -1,0 +1,101 @@
+/* ===================================================================
+   Carousel — PixRemix v2.1
+   Mockup carousel with dot indicators
+   =================================================================== */
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform var(--duration-moderate) var(--ease-out);
+  will-change: transform;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  min-width: 100%;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Carousel navigation arrows */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border: 1px solid var(--neutral-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  z-index: var(--z-base);
+}
+
+.carousel-nav:hover {
+  background: var(--surface-white);
+  box-shadow: var(--shadow-md);
+}
+
+.carousel-nav svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--neutral-900);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.carousel-prev {
+  left: var(--space-3);
+}
+
+.carousel-next {
+  right: var(--space-3);
+}
+
+/* Dot indicators */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--neutral-200);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.carousel-dot.active {
+  background: var(--accent);
+  width: 24px;
+}
+
+/* Hint text */
+.carousel-hint {
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--neutral-400);
+  padding: var(--space-2) 0;
+}
