@@ -112,3 +112,14 @@
   height: auto;
   opacity: 1;
 }
+
+/* Baseline reveal that runs in EVERY browser when an item opens (independent
+   of ::details-content support): the answer fades and slides in. */
+.faq-item[open] > :not(summary) {
+  animation: faq-reveal var(--duration-moderate) var(--ease-out);
+}
+
+@keyframes faq-reveal {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
