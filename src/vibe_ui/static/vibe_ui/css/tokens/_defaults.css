@@ -33,6 +33,7 @@
   /* --- Fonts --- */
   --font-heading: 'Space Grotesk', 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'Fira Code', 'SF Mono', Menlo, monospace;
 
   /* --- Legacy compatibility (maps old StickerVibez vars to new) --- */
   --color-bg: var(--surface-cream);

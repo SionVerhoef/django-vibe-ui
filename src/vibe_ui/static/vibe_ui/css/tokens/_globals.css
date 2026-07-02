@@ -66,8 +66,23 @@
   --z-toast: 1100;
 
   /* --- Layout --- */
+  --container-narrow: 640px;   /* forms / single-column reading */
   --container-max: 900px;
   --container-wide: 1200px;
   --header-height: 64px;
   --tab-bar-height: 56px;
+
+  /* --- Border widths --- */
+  --border-width: 1px;
+  --border-width-2: 2px;
+
+  /* --- Breakpoints ---
+     NOTE: CSS variables can't be used inside @media (min-width: var(--bp-md))
+     — media queries don't read var(). These are the canonical values for
+     container queries, JS, and for keeping every site's hand-written @media
+     breakpoints identical by convention. */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
 }
