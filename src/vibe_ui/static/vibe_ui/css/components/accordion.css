@@ -123,3 +123,15 @@
   from { opacity: 0; transform: translateY(-8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+
+/* When the optional JS enhancer (accordion.js) is active it owns the open AND
+   close animation, so silence the CSS-only ones to avoid double animations. */
+.faq-item.is-enhanced > :not(summary) { animation: none; }
+
+.faq-item.is-enhanced::details-content {
+  height: auto;
+  opacity: 1;
+  overflow: visible;
+  transition: none;
+}

@@ -137,6 +137,19 @@ exactly the kind of thing the package owns — see
 
 ---
 
+## Optional: smooth accordion close animation
+
+The FAQ/accordion works with **zero JavaScript** (native `<details>` + a CSS
+reveal on open). For a smooth *close* animation in every browser, optionally
+include the enhancer — it progressively enhances `.faq-item` elements and
+respects `prefers-reduced-motion`:
+
+```html
+<script src="{% static 'vibe_ui/js/accordion.js' %}" defer></script>
+```
+
+---
+
 ## License
 
 MIT © Sion Verhoef
