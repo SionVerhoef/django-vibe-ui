@@ -1,37 +1,43 @@
 /* ===================================================================
-   THEME OVERRIDE — example
+   THEME OVERRIDE — example (three-tier token system)
    -------------------------------------------------------------------
-   Copy this into your SITE's own static dir (NOT the package), e.g.
-   `static/css/theme.css`, set the brand levers you care about, and load
-   it AFTER vibe_ui's ui.css so these values win:
+   The tokens come in three layers:
+     1. GLOBAL primitives   (_globals.css)  — spacing / radius / type /
+        motion. Shared across ALL sites; you rarely touch these.
+     2. BRAND palette+fonts  (_defaults.css) — accent, surfaces, neutrals,
+        fonts. THIS is what you override to re-brand (below).
+     3. SEMANTIC roles       (_semantic.css) — --surface / --text /
+        --border … Components read these, and they map onto the brand, so
+        overriding the brand re-themes everything automatically.
+
+   Copy this into your SITE's static dir (e.g. static/css/theme.css) and
+   load it AFTER vibe_ui's ui.css so your values win:
 
      <link rel="stylesheet" href="{% static 'vibe_ui/css/ui.css' %}">
      <link rel="stylesheet" href="{% static 'css/theme.css' %}">   <!-- this file -->
-
-   You only need to override the tokens you want to change — every
-   component reads these variables, so re-theming the whole UI is a
-   handful of lines. Leave the rest to the package defaults.
    =================================================================== */
 
 :root {
   /* --- Brand accent (the single biggest lever) --- */
-  --accent:       #2563EB;                      /* e.g. a blue brand    */
+  --accent:       #2563EB;
   --accent-hover: #1D4ED8;
   --accent-glow:  rgba(37, 99, 235, 0.20);
   --shadow-glow:  0 0 20px rgba(37, 99, 235, 0.25);
 
-  /* --- Surfaces (page + card backgrounds) --- */
-  --surface-cream: #FFFFFF;                      /* neutral instead of warm */
+  /* --- Surfaces + neutral ramp ---
+     LIGHT theme: tweak the surfaces.
+     DARK theme:  also flip the neutral ramp (900 = light text,
+     50/100 = dark elevated). The semantic roles follow automatically. */
+  --surface-cream: #FFFFFF;   /* page background */
   --surface-warm:  #EFF6FF;
 
-  /* --- Typography (swap the type personality) --- */
+  /* --- Fonts --- */
   --font-heading: 'Sora', 'Inter', system-ui, sans-serif;
   --font-body:    'Inter', system-ui, -apple-system, sans-serif;
 
-  /* --- Shape language (rounded vs sharp) --- */
+  /* --- Shape / motion (from _globals; override only if needed) --- */
   --radius-md: 8px;
-  --radius-lg: 14px;
 
-  /* --- Motion (snappier / calmer) --- */
-  --duration-fast: 120ms;
+  /* --- One-off role override (usually unnecessary) --- */
+  /* --border-focus: var(--accent); */
 }

@@ -19,12 +19,15 @@ src/vibe_ui/
 ├── static/vibe_ui/css/
 │   ├── ui.css                  # entry point — load this once per page
 │   ├── tokens/
-│   │   ├── _defaults.css       # shipped DEFAULT tokens (colors, type, spacing, motion…)
+│   │   ├── _globals.css        # invariant scales (spacing/radius/type/motion) — shared across ALL sites
+│   │   ├── _defaults.css       # brand palette + fonts — override these per site
+│   │   ├── _semantic.css       # roles components consume (--surface/--text/--border…) — auto-follow the brand
 │   │   └── overrides.example.css   # copy into YOUR site to re-theme
 │   ├── base/                   # reset, typography, accessibility
 │   ├── layout/                 # container, header, navigation, footer
 │   ├── components/             # buttons, cards, forms, badges, modal, carousel, toast, progress, accordion
 │   └── utilities/              # helpers
+├── static/vibe_ui/js/          # optional progressive-enhancement scripts (accordion.js)
 ├── templates/vibe_ui/          # button.html, card.html (optional partials)
 └── templatetags/vibe_ui.py     # {% vibe_button %}, {% vibe_card %}
 ```

@@ -13,8 +13,11 @@
 
 @layer reset, base, layout, components, pages, utilities;
 
-/* --- Tokens (unlayered — available everywhere; site overrides win) --- */
+/* --- Tokens (unlayered — available everywhere; site overrides win) ---
+   globals = invariant scales · defaults = brand palette · semantic = roles */
+@import url('./tokens/_globals.css');
 @import url('./tokens/_defaults.css');
+@import url('./tokens/_semantic.css');
 
 /* --- Reset --- */
 @import url('./base/reset.css') layer(reset);

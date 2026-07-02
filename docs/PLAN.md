@@ -38,6 +38,54 @@ Done in this scaffold:
 
 ---
 
+## v0.2.0 — Harvest motionconvert's fields & selectors
+
+motionconvert is an engineering-tools site (drivetrain builder, CiA 402
+decoder, unit converters). Its signature reusable pieces are **fields and
+selectors**, and they're **dark-first** and **JS-backed** — richer than the
+StickerVibez CSS-only components. Decisions locked in with Sion:
+bring **all** high/medium/low components, **fully** (CSS + JS + Django template
+tags), on top of a new **semantic token layer**.
+
+### Step 1 — Semantic token layer ✅ (foundation)
+Three-tier tokens so dark-first components port cleanly:
+- `_globals.css` — invariant scales (spacing/radius/type/motion), shared by all sites.
+- `_defaults.css` — brand palette + fonts (what a site overrides).
+- `_semantic.css` — roles components consume (`--surface`, `--text`, `--border`,
+  `--surface-input`, `--accent-subtle`, `--ring` …), mapping onto the brand so
+  overriding the brand re-themes everything. New components read the ROLES.
+- [x] Split tokens, re-point `ui.css`, verify every component token resolves + demo parity.
+
+### Step 2 — Reconcile the generic form set
+- [ ] Merge StickerVibez `.form-*` with motionconvert `.form-control` / `.form-check`
+      into one form component; re-point at semantic tokens (`--surface-input`,
+      `--border`, `--border-focus`, `--text`).
+
+### Step 3 — `category-nav` (pure-CSS selector) — easy win
+- [ ] Port the horizontal nav/segmented selector with active state.
+
+### Step 4 — `num-base-field` (full: CSS + JS + template tag)
+- [ ] Port CSS (integer field + DEC/HEX/BIN base selector + copy) on semantic tokens.
+- [ ] Ship `js/num-base-field.js` (self-contained; fires `numbase:change`).
+- [ ] Add the Django partial + template tag `{% vibe_num_base_field %}`.
+
+### Step 5 — `value-field` (full: CSS + JS + template tag)
+- [ ] Port CSS chrome (input/output, unit selector, copy + copy-format menu, variants).
+- [ ] Ship `js/value-field.js` + `js/copy-format.js` and the `{% vibe_value_field %}` tag.
+- [ ] Keep unit-conversion DOMAIN data/logic in motionconvert; the package owns the widget.
+
+### Step 6 — `tool-toolbar`, tabs, pills (remaining medium/low)
+- [ ] Port toolbar/share-banner chrome + `js/tool-toolbar.js`; tabs & pills CSS.
+
+### Step 7 — Showcase + verify
+- [ ] Add every new field/selector to `demo/index.html` under all three themes.
+- [ ] Verify in both StickerVibez and motionconvert.
+
+**Left behind (site-specific):** `logo` / `logo_mark` (brand identity) and the
+whole-feature pages `drivetrain.css` / `statusword.css` (motionconvert's `pages/`).
+
+---
+
 ## Phase 2 — Prove it by re-consuming in StickerVibez itself
 
 Lowest-risk first adoption: swap StickerVibez's local `static/css/` for the

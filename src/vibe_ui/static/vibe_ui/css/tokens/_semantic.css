@@ -1,0 +1,33 @@
+/* ===================================================================
+   SEMANTIC roles — what COMPONENTS consume. Each maps onto a brand token
+   (from _defaults.css / a site's theme.css), so overriding the brand
+   re-themes every role automatically. New components (esp. the
+   motionconvert-derived fields & selectors) should read THESE role names,
+   not raw palette values — that's what keeps them portable across brands
+   and light/dark themes.
+   =================================================================== */
+:root {
+  /* --- Surfaces --- */
+  --surface: var(--surface-white);          /* card / panel background      */
+  --surface-page: var(--surface-cream);     /* page background              */
+  --surface-elevated: var(--surface-warm);  /* raised / hover surface       */
+  --surface-input: var(--surface-white);    /* form field background        */
+
+  /* --- Text --- */
+  --text: var(--neutral-900);               /* primary text                 */
+  --text-muted: var(--neutral-600);         /* secondary text               */
+  --text-subtle: var(--neutral-400);        /* hints / placeholders         */
+  --text-on-accent: var(--surface-white);   /* text on an accent fill       */
+
+  /* --- Borders --- */
+  --border: var(--neutral-200);             /* default line                 */
+  --border-subtle: var(--neutral-100);      /* faint divider                */
+  --border-strong: var(--neutral-400);      /* emphasized / hover line      */
+  --border-focus: var(--accent);            /* focused field                */
+
+  /* --- Accent roles --- */
+  --accent-subtle: color-mix(in srgb, var(--accent) 12%, transparent);
+
+  /* --- Focus ring --- */
+  --ring: 0 0 0 3px var(--accent-glow);
+}
