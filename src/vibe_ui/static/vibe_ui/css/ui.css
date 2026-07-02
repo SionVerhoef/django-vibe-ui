@@ -42,6 +42,8 @@
 @import url('./components/toast.css') layer(components);
 @import url('./components/progress.css') layer(components);
 @import url('./components/accordion.css') layer(components);
+@import url('./components/category-nav.css') layer(components);
+@import url('./components/num-field.css') layer(components);
 
 /* --- Utilities --- */
 @import url('./utilities/helpers.css') layer(utilities);

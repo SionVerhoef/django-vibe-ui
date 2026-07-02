@@ -183,6 +183,49 @@
     </section>
 
     <section>
+      <h2>Category nav (selector)</h2>
+      <p class="muted">Vertical link list on wide screens; narrow the window and it becomes a native select.</p>
+      <nav class="category-nav" aria-label="Categories" style="max-width:240px;margin-top:var(--space-4)">
+        <ul class="category-nav-list" role="list">
+          <li><a href="#" class="category-nav-link category-nav-link--active" aria-current="page">Length</a></li>
+          <li><a href="#" class="category-nav-link">Speed</a></li>
+          <li><a href="#" class="category-nav-link">Torque</a></li>
+          <li><a href="#" class="category-nav-link">Power</a></li>
+          <li><a href="#" class="category-nav-link">Pressure</a></li>
+        </ul>
+        <label class="category-nav-select-label" for="demo-cat">Categories</label>
+        <select class="category-nav-select" id="demo-cat" aria-label="Categories" data-category-nav>
+          <option value="#" selected>Length</option>
+          <option value="#">Speed</option>
+          <option value="#">Torque</option>
+          <option value="#">Power</option>
+          <option value="#">Pressure</option>
+        </select>
+      </nav>
+    </section>
+
+    <section>
+      <h2>Numeric field — DEC / HEX / BIN</h2>
+      <p class="muted">Type a number, switch the base on the right, hit copy. Monospace + tabular figures; fires a <code>numbase:change</code> event. Seeded with 4660 (= 0x1234).</p>
+      <div class="num-field" data-field-id="demo" data-width-bits="16" data-base="dec" style="max-width:340px;margin-top:var(--space-4)">
+        <div class="num-field-inner">
+          <input type="text" id="nbf-demo" class="num-field-input" placeholder="Enter value" inputmode="text" autocomplete="off" spellcheck="false" data-field="demo" value="4660">
+          <button type="button" class="num-field-copy" data-field="demo" title="Copy value" aria-label="Copy value">
+            <svg class="num-field-copy-icon num-field-copy-icon--idle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="num-field-copy-icon num-field-copy-icon--done" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
+          <select class="num-field-base" id="nbf-demo-base" aria-label="Number base">
+            <option value="dec">DEC</option>
+            <option value="hex">HEX</option>
+            <option value="bin-msb">BIN 15&#8594;0</option>
+            <option value="bin-lsb">BIN 0&#8594;15</option>
+          </select>
+        </div>
+        <div class="num-field-hint" id="nbf-demo-hint" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section>
       <h2>Accordion / FAQ</h2>
       <div class="faq-container" style="margin-top:var(--space-4)">
         <details class="faq-item" open>
@@ -208,6 +251,8 @@
 
   <div class="toast-container" id="toasts"></div>
 
+  <script src="../src/vibe_ui/static/vibe_ui/js/num-base-field.js" defer></script>
+  <script src="../src/vibe_ui/static/vibe_ui/js/category-nav.js" defer></script>
   <script src="../src/vibe_ui/static/vibe_ui/js/accordion.js" defer></script>
 
   <script>

@@ -68,13 +68,14 @@ Single canonical `.form-*` convention (no aliases — sites convert to it):
 - [ ] Trim later: `.upload-zone*`, `.style-tile*`, `.discount-input-group` are
       StickerVibez-specific — flagged in forms.css for Phase-2 extraction.
 
-### Step 3 — `category-nav` (pure-CSS selector) — easy win
-- [ ] Port the horizontal nav/segmented selector with active state.
+### Step 3 — `category-nav` (selector) ✅
+- [x] Ported: desktop link-list + mobile `<select>` (js/category-nav.js) on
+      semantic tokens; `{% vibe_category_nav %}` tag + partial; shown in demo.
 
-### Step 4 — `num-base-field` (full: CSS + JS + template tag)
-- [ ] Port CSS (integer field + DEC/HEX/BIN base selector + copy) on semantic tokens.
-- [ ] Ship `js/num-base-field.js` (self-contained; fires `numbase:change`).
-- [ ] Add the Django partial + template tag `{% vibe_num_base_field %}`.
+### Step 4 — `num-base-field` (full: CSS + JS + template tag) ✅
+- [x] Ported CSS on semantic tokens (adaptive tints via color-mix).
+- [x] Shipped `js/num-base-field.js` verbatim (self-contained; fires `numbase:change`).
+- [x] Added partial + `{% vibe_num_base_field %}` tag; shown in demo.
 
 ### Step 5 — `value-field` (full: CSS + JS + template tag)
 - [ ] Port CSS chrome (input/output, unit selector, copy + copy-format menu, variants).
