@@ -1,0 +1,43 @@
+{% comment %}
+  vibe_ui value field (WIDGET only). Rendered by {% vibe_value_field %}.
+  Fill the unit <select> from JS: el.valueField.setUnits([{value,label,symbol}])
+  and listen for "valuefield:change" to convert. Needs js/value-field.js and
+  js/copy-format.js.
+{% endcomment %}
+<div class="value-field{% if mode == 'output' %} value-field--output{% endif %}{% if variant %} value-field--{{ variant }}{% endif %}"
+     data-field-id="{{ field_id }}"{% if category %} data-category="{{ category }}"{% endif %}
+     data-mode="{{ mode|default:'input' }}"{% if default_unit %} data-default-unit="{{ default_unit }}"{% endif %}>
+  {% if label %}<label for="vf-{{ field_id }}">{{ label }}</label>{% endif %}
+  <div class="value-field-inner">
+    {% if mode == 'output' %}
+    <div class="value-field-slot">
+      <input type="text" id="vf-{{ field_id }}" class="value-field-input"
+             value="{{ value|default:'' }}" readonly tabindex="-1" data-field="{{ field_id }}">
+      <div class="value-field-copy-group">
+        <button type="button" class="value-field-copy" data-field="{{ field_id }}"
+                title="Copy value" aria-label="Copy {{ label|default:'value' }} to clipboard"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+        <button type="button" class="value-field-copy-menu" data-field="{{ field_id }}"
+                title="Copy format" aria-label="Copy format options"
+                aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+      </div>
+    </div>
+    {% else %}
+    <input type="text" id="vf-{{ field_id }}" class="value-field-input"
+           inputmode="decimal" autocomplete="off" spellcheck="false"
+           placeholder="{{ placeholder|default:'Enter value' }}"
+           value="{{ value|default:'' }}" data-field="{{ field_id }}">
+    {% endif %}
+    <select class="value-field-unit" id="vf-{{ field_id }}-unit"
+            data-field="{{ field_id }}" aria-label="{{ label|default:'value' }} unit"></select>
+  </div>
+  {% if mode == 'output' %}
+  <div class="value-field-copy-panel" data-field="{{ field_id }}" role="menu" aria-label="Copy options" hidden>
+    <span class="value-field-copy-label">Copy format</span>
+    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="number" aria-checked="true"><span>Number only</span><span class="vf-fmt-eg">10.5</span></button>
+    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="value-unit" aria-checked="false"><span>Value + unit</span><span class="vf-fmt-eg">10.5 N·m</span></button>
+    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="value-unit-bracket" aria-checked="false"><span>Value + unit (bracket)</span><span class="vf-fmt-eg">10.5 [N·m]</span></button>
+    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="python" aria-checked="false"><span>Python</span><span class="vf-fmt-eg">x = 10.5  # N·m</span></button>
+    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="matlab" aria-checked="false"><span>MATLAB</span><span class="vf-fmt-eg">x = 10.5; % N·m</span></button>
+  </div>
+  {% endif %}
+</div>

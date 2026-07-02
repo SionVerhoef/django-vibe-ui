@@ -77,10 +77,14 @@ Single canonical `.form-*` convention (no aliases — sites convert to it):
 - [x] Shipped `js/num-base-field.js` verbatim (self-contained; fires `numbase:change`).
 - [x] Added partial + `{% vibe_num_base_field %}` tag; shown in demo.
 
-### Step 5 — `value-field` (full: CSS + JS + template tag)
-- [ ] Port CSS chrome (input/output, unit selector, copy + copy-format menu, variants).
-- [ ] Ship `js/value-field.js` + `js/copy-format.js` and the `{% vibe_value_field %}` tag.
-- [ ] Keep unit-conversion DOMAIN data/logic in motionconvert; the package owns the widget.
+### Step 5 — `value-field` (WIDGET only: CSS + JS + tag) ✅
+Boundary (Option A): package owns the reusable WIDGET; each site supplies units
++ conversion. The 901-line unit engine + units DB stay in motionconvert.
+- [x] Clean value-field.css on semantic tokens (dropped app-specific station/result/flash variants).
+- [x] Slim js/value-field.js (~110 lines): unit selector + copy + copy-format popover;
+      exposes setUnits()/setValue()/getUnit(), fires `valuefield:change` — site converts.
+- [x] js/copy-format.js (generic payload formatter → window.VibeCopyFormat).
+- [x] `{% vibe_value_field %}` tag + partial; demo wires a length converter to prove reuse.
 
 ### Step 6 — `tool-toolbar`, tabs, pills (remaining medium/low)
 - [ ] Port toolbar/share-banner chrome + `js/tool-toolbar.js`; tabs & pills CSS.

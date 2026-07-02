@@ -44,6 +44,7 @@
 @import url('./components/accordion.css') layer(components);
 @import url('./components/category-nav.css') layer(components);
 @import url('./components/num-field.css') layer(components);
+@import url('./components/value-field.css') layer(components);
 
 /* --- Utilities --- */
 @import url('./utilities/helpers.css') layer(utilities);

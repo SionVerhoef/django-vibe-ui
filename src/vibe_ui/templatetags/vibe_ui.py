@@ -69,3 +69,18 @@ def vibe_num_base_field(field_id, label="", placeholder="Enter value", width_bit
         "width_bits": width_bits,
         "default_base": default_base,
     }
+
+
+@register.inclusion_tag("vibe_ui/value_field.html")
+def vibe_value_field(field_id, label="", mode="input", value="", placeholder="Enter value",
+                     variant="", category="", default_unit=""):
+    """Render a value-field WIDGET (input/output + unit selector + copy).
+
+    Fill the unit <select> and convert from your own JS by listening for the
+    "valuefield:change" event; needs js/value-field.js and js/copy-format.js.
+    """
+    return {
+        "field_id": field_id, "label": label, "mode": mode, "value": value,
+        "placeholder": placeholder, "variant": variant, "category": category,
+        "default_unit": default_unit,
+    }
