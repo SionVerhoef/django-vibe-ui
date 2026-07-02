@@ -88,3 +88,27 @@
   color: var(--neutral-600);
   font-size: var(--text-sm);
 }
+
+/* --- Animated expand/collapse ---
+   Uses interpolate-size + ::details-content so height animates to/from `auto`.
+   Browsers without ::details-content support simply ignore these rules and
+   fall back to the native instant toggle (still fully functional). */
+:root {
+  interpolate-size: allow-keywords;
+}
+
+.faq-item::details-content {
+  height: 0;
+  overflow: clip;
+  opacity: 0;
+  transition:
+    height var(--duration-normal) var(--ease-out),
+    opacity var(--duration-normal) var(--ease-out),
+    content-visibility var(--duration-normal) var(--ease-out);
+  transition-behavior: allow-discrete;
+}
+
+.faq-item[open]::details-content {
+  height: auto;
+  opacity: 1;
+}
