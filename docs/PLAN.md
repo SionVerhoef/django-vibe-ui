@@ -56,10 +56,17 @@ Three-tier tokens so dark-first components port cleanly:
   overriding the brand re-themes everything. New components read the ROLES.
 - [x] Split tokens, re-point `ui.css`, verify every component token resolves + demo parity.
 
-### Step 2 — Reconcile the generic form set
-- [ ] Merge StickerVibez `.form-*` with motionconvert `.form-control` / `.form-check`
-      into one form component; re-point at semantic tokens (`--surface-input`,
-      `--border`, `--border-focus`, `--text`).
+### Step 2 — Reconcile the generic form set ✅
+Single canonical `.form-*` convention (no aliases — sites convert to it):
+`.form-group`, `.form-label`(+`-required`), `.form-input`, `.form-check`
+(+`-input`/`-label`), `.form-error`, `.form-row`, `.alert*`, `.is-valid`/`.is-invalid`.
+- [x] Re-point generic form rules at semantic tokens (`--surface-input`, `--border`,
+      `--border-focus`, `--text`, `--ring`).
+- [x] Add `.form-check` (checkbox/radio) + `.form-row` (from motionconvert's
+      `.field-pair`); showcased in the demo.
+- Migration when motionconvert adopts: `.form-control`→`.form-input`, `.field-pair`→`.form-row`.
+- [ ] Trim later: `.upload-zone*`, `.style-tile*`, `.discount-input-group` are
+      StickerVibez-specific — flagged in forms.css for Phase-2 extraction.
 
 ### Step 3 — `category-nav` (pure-CSS selector) — easy win
 - [ ] Port the horizontal nav/segmented selector with active state.
