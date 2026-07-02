@@ -52,10 +52,17 @@
 .value-field-input::placeholder { color: var(--text-subtle); }
 
 .value-field-unit {
-  padding: var(--space-2);
+  flex: 0 0 auto;              /* size to content, don't eat the value's width */
+  width: auto;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: var(--space-2) var(--space-6) var(--space-2) var(--space-2);
   border: none;
   border-left: var(--border-width) solid var(--border);
   background-color: color-mix(in srgb, var(--text) 4%, transparent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23adb5bd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-2) center;
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: var(--text-sm);

@@ -54,6 +54,8 @@
 .num-field-input::placeholder { color: var(--text-subtle); }
 
 .num-field-base {
+  flex: 0 0 auto;              /* size to content, don't eat the input's width */
+  width: auto;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
