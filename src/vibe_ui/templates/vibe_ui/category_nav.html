@@ -1,0 +1,22 @@
+{% comment %}
+  vibe_ui category nav. Rendered by {% vibe_category_nav %}.
+  items: iterable of objects with .key, .name, .url
+{% endcomment %}
+<nav class="category-nav" aria-label="{{ label|default:'Categories' }}">
+  <ul class="category-nav-list" role="list">
+    {% for item in items %}
+    <li>
+      <a href="{{ item.url }}"
+         class="category-nav-link{% if item.key == current_key %} category-nav-link--active{% endif %}"
+         {% if item.key == current_key %}aria-current="page"{% endif %}>{{ item.name }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  <label class="category-nav-select-label" for="{{ select_id|default:'category-nav-select' }}">{{ label|default:'Categories' }}</label>
+  <select class="category-nav-select" id="{{ select_id|default:'category-nav-select' }}"
+          aria-label="{{ label|default:'Categories' }}" data-category-nav>
+    {% for item in items %}
+    <option value="{{ item.url }}"{% if item.key == current_key %} selected{% endif %}>{{ item.name }}</option>
+    {% endfor %}
+  </select>
+</nav>

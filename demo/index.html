@@ -135,6 +135,28 @@
             <label class="form-label form-label-required" for="email">Email</label>
             <input class="form-input" id="email" type="email" placeholder="ada@example.com">
           </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="city">City</label>
+              <input class="form-input" id="city" type="text" placeholder="London">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="zip">Postal code</label>
+              <input class="form-input" id="zip" type="text" placeholder="EC1A 1AA">
+            </div>
+          </div>
+          <label class="form-check">
+            <input class="form-check-input" type="checkbox" checked>
+            <span class="form-check-label">Email me product updates</span>
+          </label>
+          <label class="form-check" style="margin-top:var(--space-2)">
+            <input class="form-check-input" type="radio" name="plan" checked>
+            <span class="form-check-label">Monthly billing</span>
+          </label>
+          <label class="form-check" style="margin-top:var(--space-2);margin-bottom:var(--space-4)">
+            <input class="form-check-input" type="radio" name="plan">
+            <span class="form-check-label">Annual billing</span>
+          </label>
           <button class="btn btn-primary">Submit</button>
         </div>
         <div>
@@ -157,6 +179,96 @@
         <div class="step"><span class="step-number">2</span> Style</div>
         <div class="step-connector"></div>
         <div class="step"><span class="step-number">3</span> Order</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Category nav (selector)</h2>
+      <p class="muted">Vertical link list on wide screens; narrow the window and it becomes a native select.</p>
+      <nav class="category-nav" aria-label="Categories" style="max-width:240px;margin-top:var(--space-4)">
+        <ul class="category-nav-list" role="list">
+          <li><a href="#" class="category-nav-link category-nav-link--active" aria-current="page">Length</a></li>
+          <li><a href="#" class="category-nav-link">Speed</a></li>
+          <li><a href="#" class="category-nav-link">Torque</a></li>
+          <li><a href="#" class="category-nav-link">Power</a></li>
+          <li><a href="#" class="category-nav-link">Pressure</a></li>
+        </ul>
+        <label class="category-nav-select-label" for="demo-cat">Categories</label>
+        <select class="category-nav-select" id="demo-cat" aria-label="Categories" data-category-nav>
+          <option value="#" selected>Length</option>
+          <option value="#">Speed</option>
+          <option value="#">Torque</option>
+          <option value="#">Power</option>
+          <option value="#">Pressure</option>
+        </select>
+      </nav>
+    </section>
+
+    <section>
+      <h2>Numeric field — DEC / HEX / BIN</h2>
+      <p class="muted">Type a number, switch the base on the right, hit copy. Monospace + tabular figures; fires a <code>numbase:change</code> event. Seeded with 4660 (= 0x1234).</p>
+      <div class="num-field" data-field-id="demo" data-width-bits="16" data-base="dec" style="max-width:340px;margin-top:var(--space-4)">
+        <div class="num-field-inner">
+          <input type="text" id="nbf-demo" class="num-field-input" placeholder="Enter value" inputmode="text" autocomplete="off" spellcheck="false" data-field="demo" value="4660">
+          <button type="button" class="num-field-copy" data-field="demo" title="Copy value" aria-label="Copy value">
+            <svg class="num-field-copy-icon num-field-copy-icon--idle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="num-field-copy-icon num-field-copy-icon--done" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
+          <select class="num-field-base" id="nbf-demo-base" aria-label="Number base">
+            <option value="dec">DEC</option>
+            <option value="hex">HEX</option>
+            <option value="bin-msb">BIN 15&#8594;0</option>
+            <option value="bin-lsb">BIN 0&#8594;15</option>
+          </select>
+        </div>
+        <div class="num-field-hint" id="nbf-demo-hint" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Value field — input/output + unit selector + copy</h2>
+      <p class="muted">Widget only — the <em>site</em> supplies the units and conversion. Here it's a length converter your other site could reuse with any data. Change the value or either unit; the output converts. Hover the output to copy, and try the format <strong>▾</strong> menu (Number / value+unit / Python / MATLAB).</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);max-width:520px;margin-top:var(--space-4)">
+        <div class="value-field" data-field-id="len-in" data-category="length" data-mode="input" data-default-unit="mm">
+          <label for="vf-len-in">From</label>
+          <div class="value-field-inner">
+            <input type="text" id="vf-len-in" class="value-field-input" inputmode="decimal" autocomplete="off" spellcheck="false" value="1234" data-field="len-in">
+            <select class="value-field-unit" id="vf-len-in-unit" data-field="len-in" aria-label="From unit"></select>
+          </div>
+        </div>
+        <div class="value-field value-field--output" data-field-id="len-out" data-category="length" data-mode="output" data-default-unit="m">
+          <label for="vf-len-out">To</label>
+          <div class="value-field-inner">
+            <div class="value-field-slot">
+              <input type="text" id="vf-len-out" class="value-field-input" value="" readonly tabindex="-1" data-field="len-out">
+              <div class="value-field-copy-group">
+                <button type="button" class="value-field-copy" data-field="len-out" title="Copy value" aria-label="Copy value"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                <button type="button" class="value-field-copy-menu" data-field="len-out" title="Copy format" aria-label="Copy format options" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+              </div>
+            </div>
+            <select class="value-field-unit" id="vf-len-out-unit" data-field="len-out" aria-label="To unit"></select>
+          </div>
+          <div class="value-field-copy-panel" data-field="len-out" aria-label="Copy options" hidden>
+            <span class="value-field-copy-label">Copy format</span>
+            <button type="button" class="value-field-copy-format" data-copy-format="number" aria-pressed="true"><span>Number only</span><span class="vf-fmt-eg">1.234</span></button>
+            <button type="button" class="value-field-copy-format" data-copy-format="value-unit" aria-pressed="false"><span>Value + unit</span><span class="vf-fmt-eg">1.234 m</span></button>
+            <button type="button" class="value-field-copy-format" data-copy-format="value-unit-bracket" aria-pressed="false"><span>Value + unit (bracket)</span><span class="vf-fmt-eg">1.234 [m]</span></button>
+            <button type="button" class="value-field-copy-format" data-copy-format="python" aria-pressed="false"><span>Python</span><span class="vf-fmt-eg">length = 1.234  # m</span></button>
+            <button type="button" class="value-field-copy-format" data-copy-format="matlab" aria-pressed="false"><span>MATLAB</span><span class="vf-fmt-eg">length = 1.234; % m</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Pill tabs</h2>
+      <p class="muted">Segmented pills for filters or tab bars — active pill = accent. CSS-only (this demo toggles active on click; wire panel-switching yourself).</p>
+      <div class="pill-tabs" role="tablist" style="margin-top:var(--space-4)">
+        <button class="pill-tab pill-tab--active" role="tab" aria-selected="true">All</button>
+        <button class="pill-tab" role="tab" aria-selected="false">Length</button>
+        <button class="pill-tab" role="tab" aria-selected="false">Speed</button>
+        <button class="pill-tab" role="tab" aria-selected="false">Torque</button>
+        <button class="pill-tab" role="tab" aria-selected="false">Power</button>
       </div>
     </section>
 
@@ -186,6 +298,10 @@
 
   <div class="toast-container" id="toasts"></div>
 
+  <script src="../src/vibe_ui/static/vibe_ui/js/copy-format.js" defer></script>
+  <script src="../src/vibe_ui/static/vibe_ui/js/value-field.js" defer></script>
+  <script src="../src/vibe_ui/static/vibe_ui/js/num-base-field.js" defer></script>
+  <script src="../src/vibe_ui/static/vibe_ui/js/category-nav.js" defer></script>
   <script src="../src/vibe_ui/static/vibe_ui/js/accordion.js" defer></script>
 
   <script>
@@ -205,6 +321,46 @@
       t.innerHTML = 'Item added <button class="toast-action">Undo</button>';
       document.getElementById('toasts').appendChild(t);
       setTimeout(() => t.remove(), 3500);
+    });
+
+    // pill-tabs demo: toggle active on click (real tabs wire panel switching)
+    document.querySelectorAll('.pill-tabs').forEach(function (group) {
+      group.addEventListener('click', function (e) {
+        var t = e.target.closest('.pill-tab');
+        if (!t) return;
+        group.querySelectorAll('.pill-tab').forEach(function (p) {
+          p.classList.toggle('pill-tab--active', p === t);
+          p.setAttribute('aria-selected', String(p === t));
+        });
+      });
+    });
+
+    // value-field demo: a length converter — the SITE-side data + conversion a
+    // real app (or your other site) supplies to the generic widget.
+    document.addEventListener('DOMContentLoaded', function () {
+      var UNITS = [
+        { value: 'mm', label: 'mm', symbol: 'mm', m: 0.001 },
+        { value: 'cm', label: 'cm', symbol: 'cm', m: 0.01 },
+        { value: 'm',  label: 'm',  symbol: 'm',  m: 1 },
+        { value: 'km', label: 'km', symbol: 'km', m: 1000 },
+        { value: 'in', label: 'in', symbol: 'in', m: 0.0254 }
+      ];
+      var factor = {}; UNITS.forEach(function (u) { factor[u.value] = u.m; });
+      var inEl = document.querySelector('[data-field-id="len-in"]');
+      var outEl = document.querySelector('[data-field-id="len-out"]');
+      if (!inEl || !outEl || !inEl.valueField || !outEl.valueField) return;
+      inEl.valueField.setUnits(UNITS);
+      outEl.valueField.setUnits(UNITS);
+      function convert() {
+        var v = parseFloat(inEl.valueField.getValue());
+        if (isNaN(v)) { outEl.valueField.setValue(''); return; }
+        var meters = v * factor[inEl.valueField.getUnit()];
+        var out = meters / factor[outEl.valueField.getUnit()];
+        outEl.valueField.setValue(String(Math.round(out * 1e6) / 1e6));
+      }
+      inEl.addEventListener('valuefield:change', convert);
+      outEl.addEventListener('valuefield:change', convert);
+      convert();
     });
   </script>
 

@@ -38,6 +38,73 @@ Done in this scaffold:
 
 ---
 
+## v0.2.0 — Harvest motionconvert's fields & selectors
+
+motionconvert is an engineering-tools site (drivetrain builder, CiA 402
+decoder, unit converters). Its signature reusable pieces are **fields and
+selectors**, and they're **dark-first** and **JS-backed** — richer than the
+StickerVibez CSS-only components. Decisions locked in with Sion:
+bring **all** high/medium/low components, **fully** (CSS + JS + Django template
+tags), on top of a new **semantic token layer**.
+
+### Step 1 — Semantic token layer ✅ (foundation)
+Three-tier tokens so dark-first components port cleanly:
+- `_globals.css` — invariant scales (spacing/radius/type/motion), shared by all sites.
+- `_defaults.css` — brand palette + fonts (what a site overrides).
+- `_semantic.css` — roles components consume (`--surface`, `--text`, `--border`,
+  `--surface-input`, `--accent-subtle`, `--ring` …), mapping onto the brand so
+  overriding the brand re-themes everything. New components read the ROLES.
+- [x] Split tokens, re-point `ui.css`, verify every component token resolves + demo parity.
+
+### Step 2 — Reconcile the generic form set ✅
+Single canonical `.form-*` convention (no aliases — sites convert to it):
+`.form-group`, `.form-label`(+`-required`), `.form-input`, `.form-check`
+(+`-input`/`-label`), `.form-error`, `.form-row`, `.alert*`, `.is-valid`/`.is-invalid`.
+- [x] Re-point generic form rules at semantic tokens (`--surface-input`, `--border`,
+      `--border-focus`, `--text`, `--ring`).
+- [x] Add `.form-check` (checkbox/radio) + `.form-row` (from motionconvert's
+      `.field-pair`); showcased in the demo.
+- Migration when motionconvert adopts: `.form-control`→`.form-input`, `.field-pair`→`.form-row`.
+- [ ] Trim later: `.upload-zone*`, `.style-tile*`, `.discount-input-group` are
+      StickerVibez-specific — flagged in forms.css for Phase-2 extraction.
+
+### Step 3 — `category-nav` (selector) ✅
+- [x] Ported: desktop link-list + mobile `<select>` (js/category-nav.js) on
+      semantic tokens; `{% vibe_category_nav %}` tag + partial; shown in demo.
+
+### Step 4 — `num-base-field` (full: CSS + JS + template tag) ✅
+- [x] Ported CSS on semantic tokens (adaptive tints via color-mix).
+- [x] Shipped `js/num-base-field.js` verbatim (self-contained; fires `numbase:change`).
+- [x] Added partial + `{% vibe_num_base_field %}` tag; shown in demo.
+
+### Step 5 — `value-field` (WIDGET only: CSS + JS + tag) ✅
+Boundary (Option A): package owns the reusable WIDGET; each site supplies units
++ conversion. The 901-line unit engine + units DB stay in motionconvert.
+- [x] Clean value-field.css on semantic tokens (dropped app-specific station/result/flash variants).
+- [x] Slim js/value-field.js (~110 lines): unit selector + copy + copy-format popover;
+      exposes setUnits()/setValue()/getUnit(), fires `valuefield:change` — site converts.
+- [x] js/copy-format.js (generic payload formatter → window.VibeCopyFormat).
+- [x] `{% vibe_value_field %}` tag + partial; demo wires a length converter to prove reuse.
+
+### Step 6 — tabs / pills ✅
+- [x] Ported `pill-tabs` (segmented rounded tabs/filters, active = accent) on
+      semantic tokens; supports `.pill-tab--active` or `aria-selected`; shown in demo.
+- [x] **Left behind** `tool-toolbar` + `tool-card`/`tool-grid`/`tool-category`:
+      these are app plumbing (feature-locks, share/save modals, JSON import,
+      motionconvert's tool directory), not generic UI — same call as value-field's engine.
+
+### Step 7 — Showcase + verify ✅ (package-level)
+- [x] Every new field/selector in `demo/index.html` under all three themes.
+- [x] Headless verification: all JS passes `node --check`, every component token
+      resolves, brace balance OK, templatetags compile, all imports wired.
+- [ ] Real-app verify in StickerVibez / motionconvert happens at adoption
+      (Phase 2 / Phase 5) — not blocking the v0.2.0 cut.
+
+**Left behind (site-specific):** `logo` / `logo_mark` (brand identity) and the
+whole-feature pages `drivetrain.css` / `statusword.css` (motionconvert's `pages/`).
+
+---
+
 ## Phase 2 — Prove it by re-consuming in StickerVibez itself
 
 Lowest-risk first adoption: swap StickerVibez's local `static/css/` for the

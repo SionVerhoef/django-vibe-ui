@@ -13,8 +13,11 @@
 
 @layer reset, base, layout, components, pages, utilities;
 
-/* --- Tokens (unlayered — available everywhere; site overrides win) --- */
+/* --- Tokens (unlayered — available everywhere; site overrides win) ---
+   globals = invariant scales · defaults = brand palette · semantic = roles */
+@import url('./tokens/_globals.css');
 @import url('./tokens/_defaults.css');
+@import url('./tokens/_semantic.css');
 
 /* --- Reset --- */
 @import url('./base/reset.css') layer(reset);
@@ -39,6 +42,10 @@
 @import url('./components/toast.css') layer(components);
 @import url('./components/progress.css') layer(components);
 @import url('./components/accordion.css') layer(components);
+@import url('./components/category-nav.css') layer(components);
+@import url('./components/num-field.css') layer(components);
+@import url('./components/value-field.css') layer(components);
+@import url('./components/pill-tabs.css') layer(components);
 
 /* --- Utilities --- */
 @import url('./utilities/helpers.css') layer(utilities);

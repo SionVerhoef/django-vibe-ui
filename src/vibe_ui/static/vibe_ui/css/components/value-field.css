@@ -1,0 +1,207 @@
+/* ===================================================================
+   Value field — labeled input/output with a trailing UNIT SELECTOR, a
+   copy button, and a copy-format popover (number / value+unit / code).
+   WIDGET ONLY: the site fills the unit <select> and does any conversion,
+   listening for "valuefield:change" (see js/value-field.js).
+   =================================================================== */
+.value-field {
+  position: relative;      /* anchor for the copy-format popover */
+  min-width: 0;
+  margin-bottom: var(--space-3);
+}
+
+.value-field label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.value-field-inner {
+  display: flex;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-input);
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.value-field-inner:hover { border-color: var(--border-strong); }
+
+.value-field-inner:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--ring);
+}
+
+.value-field-input {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  outline: none;
+  caret-color: var(--accent);
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.value-field-input::placeholder { color: var(--text-subtle); }
+
+.value-field-unit {
+  flex: 0 0 auto;              /* size to content, don't eat the value's width */
+  width: auto;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: var(--space-2) var(--space-6) var(--space-2) var(--space-2);
+  border: none;
+  border-left: var(--border-width) solid var(--border);
+  background-color: color-mix(in srgb, var(--text) 4%, transparent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23adb5bd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-2) center;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+  outline: none;
+  min-width: 3.75rem;
+}
+
+.value-field-unit:focus-visible { background-color: var(--accent-subtle); color: var(--text); }
+
+/* --- Output mode: readonly value + hover-revealed copy controls --- */
+.value-field-slot {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.value-field--output .value-field-slot .value-field-input { width: 100%; }
+
+.value-field-copy-group {
+  position: absolute;
+  inset: 0 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.value-field--output:hover .value-field-copy-group,
+.value-field-copy-group:focus-within,
+.value-field-copy-group.is-open,
+.value-field-copy-group:has(.value-field-copy--done) { opacity: 1; }
+
+@media (hover: none) { .value-field-copy-group { opacity: 1; } }
+
+.value-field-copy,
+.value-field-copy-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-input);
+  border: none;
+  color: var(--text-subtle);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.value-field-copy { padding: 0 var(--space-2) 0 var(--space-3); }
+
+.value-field-copy-menu {
+  padding: 0 var(--space-2) 0 var(--space-1);
+  position: relative;
+}
+
+.value-field-copy-menu::before {
+  content: "";
+  align-self: center;
+  width: 1px;
+  height: 1em;
+  background: var(--border);
+  margin-right: var(--space-1);
+}
+
+.value-field-copy:hover,
+.value-field-copy-menu:hover,
+.value-field-copy-menu[aria-expanded="true"] { color: var(--text); }
+
+.value-field-copy--done { opacity: 1 !important; color: var(--success); }
+.value-field-copy--done svg { display: none; }
+.value-field-copy--done::after {
+  content: "\2713";
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+}
+
+/* --- Copy-format popover --- */
+.value-field-copy-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: var(--z-dropdown);
+  min-width: 240px;
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-1) 0;
+  margin-top: 2px;
+  text-align: left;
+}
+
+.value-field-copy-panel[hidden] { display: none; }
+
+.value-field-copy-label {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+  padding: var(--space-1) var(--space-4);
+}
+
+.value-field-copy-format {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-8);
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.value-field-copy-format:hover { background: var(--surface-elevated); }
+
+.value-field-copy-format .vf-fmt-eg {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-subtle);
+  white-space: nowrap;
+}
+
+.value-field-copy-format[aria-pressed="true"] { font-weight: var(--weight-semibold); }
+
+.value-field-copy-format[aria-pressed="true"]::before {
+  content: "\2713";
+  position: absolute;
+  left: var(--space-3);
+  color: var(--accent);
+}

@@ -1,0 +1,30 @@
+{% comment %}
+  vibe_ui numeric base field (DEC/HEX/BIN). Rendered by {% vibe_num_base_field %}.
+  Requires js/num-base-field.js. Fires "numbase:change" (detail.value/base/raw).
+{% endcomment %}
+<div class="num-field" data-field-id="{{ field_id }}" data-width-bits="{{ width_bits|default:16 }}" data-base="{{ default_base|default:'dec' }}">
+  <div class="num-field-inner">
+    <input type="text" id="nbf-{{ field_id }}" class="num-field-input"
+           placeholder="{{ placeholder|default:'Enter value' }}"
+           inputmode="text" autocomplete="off" spellcheck="false" value="{{ value|default:'' }}" data-field="{{ field_id }}">
+    <button type="button" class="num-field-copy" data-field="{{ field_id }}"
+            title="Copy value" aria-label="Copy {{ label|default:'value' }} to clipboard">
+      <svg class="num-field-copy-icon num-field-copy-icon--idle" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <svg class="num-field-copy-icon num-field-copy-icon--done" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </button>
+    <select class="num-field-base" id="nbf-{{ field_id }}-base"
+            aria-label="{{ label|default:'Number base' }}"
+            title="DEC / HEX / BIN {{ width_bits|default:16|add:'-1' }}→0 (msb-first) / BIN 0→{{ width_bits|default:16|add:'-1' }} (lsb-first)">
+      <option value="dec">DEC</option>
+      <option value="hex">HEX</option>
+      <option value="bin-msb">BIN {{ width_bits|default:16|add:'-1' }}→0</option>
+      <option value="bin-lsb">BIN 0→{{ width_bits|default:16|add:'-1' }}</option>
+    </select>
+  </div>
+  <div class="num-field-hint" id="nbf-{{ field_id }}-hint" role="status" aria-live="polite"></div>
+</div>
