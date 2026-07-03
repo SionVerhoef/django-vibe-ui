@@ -3,6 +3,20 @@
 All notable changes to django-vibe-ui are documented here.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.2.1] — ship the font files (unreleased)
+
+### Fixed
+- **`base/typography.css` referenced four `vibe_ui/fonts/*.woff2` files that
+  were never shipped** (SpaceGrotesk-Latin, SpaceGrotesk-LatinExt,
+  Inter-Regular, Inter-Medium). Consumers running Django's manifest static
+  storage (`CompressedManifestStaticFilesStorage` — the standard production
+  setup) failed hard at `collectstatic` with `MissingFileError`; plain-storage
+  consumers got silent 404s and fell back to system fonts. The woff2 files
+  (copied from StickerVibez, where this CSS originated) now live at
+  `src/vibe_ui/static/vibe_ui/fonts/`.
+- `__version__` bumped from the stale `0.1.0` to `0.2.1` so wheel metadata
+  matches the release tag again.
+
 ## [0.2.0] — motionconvert fields & selectors (unreleased)
 
 ### Added
