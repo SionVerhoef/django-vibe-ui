@@ -13,6 +13,15 @@ site can consume it and re-theme it with a handful of CSS variables.
 
 ---
 
+## Documentation
+
+- **[docs/components.md](docs/components.md)** — every component: classes, markup, the JS widget APIs, and template tags.
+- **[docs/tokens.md](docs/tokens.md)** — full token reference (globals · brand · semantic) + the theming guide (incl. dark mode).
+- **[demo/index.html](demo/index.html)** — live showcase of every component under three brand themes. Run `python3 -m http.server` in the repo root and open `/demo/`.
+- **[docs/PLAN.md](docs/PLAN.md)** — roadmap · **[CHANGELOG.md](CHANGELOG.md)** — changes.
+
+---
+
 ## What's inside
 
 ```
