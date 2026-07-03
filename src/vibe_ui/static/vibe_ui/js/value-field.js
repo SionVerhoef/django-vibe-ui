@@ -95,14 +95,11 @@
         btn.addEventListener('click', function () {
           format = btn.dataset.copyFormat || 'number';
           panel.querySelectorAll('.value-field-copy-format').forEach(function (b) {
-            b.setAttribute('aria-checked', String(b === btn));
+            b.setAttribute('aria-pressed', String(b === btn));
           });
           openPanel(false);
           doCopy();
         });
-      });
-      document.addEventListener('click', function (e) {
-        if (!panel.hidden && !root.contains(e.target)) openPanel(false);
       });
     }
 
@@ -131,6 +128,23 @@
   function attachAll() {
     document.querySelectorAll('.value-field').forEach(attach);
   }
+
+  // One delegated handler for ALL value-fields: close any open copy-format
+  // popover on an outside click or Escape (instead of a listener per instance).
+  function closeOpenPanels(target) {
+    document.querySelectorAll('.value-field-copy-group.is-open').forEach(function (group) {
+      var root = group.closest('.value-field');
+      if (root && (!target || !root.contains(target))) {
+        var panel = root.querySelector('.value-field-copy-panel');
+        var menuBtn = root.querySelector('.value-field-copy-menu');
+        if (panel) panel.hidden = true;
+        group.classList.remove('is-open');
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+  document.addEventListener('click', function (e) { closeOpenPanels(e.target); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeOpenPanels(null); });
 
   window.VibeValueField = { attach: attach, attachAll: attachAll };
 

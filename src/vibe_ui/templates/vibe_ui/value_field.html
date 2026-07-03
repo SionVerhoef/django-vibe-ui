@@ -31,13 +31,13 @@
             data-field="{{ field_id }}" aria-label="{{ label|default:'value' }} unit"></select>
   </div>
   {% if mode == 'output' %}
-  <div class="value-field-copy-panel" data-field="{{ field_id }}" role="menu" aria-label="Copy options" hidden>
+  <div class="value-field-copy-panel" data-field="{{ field_id }}" aria-label="Copy options" hidden>
     <span class="value-field-copy-label">Copy format</span>
-    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="number" aria-checked="true"><span>Number only</span><span class="vf-fmt-eg">10.5</span></button>
-    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="value-unit" aria-checked="false"><span>Value + unit</span><span class="vf-fmt-eg">10.5 N·m</span></button>
-    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="value-unit-bracket" aria-checked="false"><span>Value + unit (bracket)</span><span class="vf-fmt-eg">10.5 [N·m]</span></button>
-    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="python" aria-checked="false"><span>Python</span><span class="vf-fmt-eg">x = 10.5  # N·m</span></button>
-    <button type="button" class="value-field-copy-format" role="menuitemradio" data-copy-format="matlab" aria-checked="false"><span>MATLAB</span><span class="vf-fmt-eg">x = 10.5; % N·m</span></button>
+    <button type="button" class="value-field-copy-format" data-copy-format="number" aria-pressed="true"><span>Number only</span><span class="vf-fmt-eg">10.5</span></button>
+    <button type="button" class="value-field-copy-format" data-copy-format="value-unit" aria-pressed="false"><span>Value + unit</span><span class="vf-fmt-eg">10.5 N·m</span></button>
+    <button type="button" class="value-field-copy-format" data-copy-format="value-unit-bracket" aria-pressed="false"><span>Value + unit (bracket)</span><span class="vf-fmt-eg">10.5 [N·m]</span></button>
+    <button type="button" class="value-field-copy-format" data-copy-format="python" aria-pressed="false"><span>Python</span><span class="vf-fmt-eg">x = 10.5  # N·m</span></button>
+    <button type="button" class="value-field-copy-format" data-copy-format="matlab" aria-pressed="false"><span>MATLAB</span><span class="vf-fmt-eg">x = 10.5; % N·m</span></button>
   </div>
   {% endif %}
 </div>

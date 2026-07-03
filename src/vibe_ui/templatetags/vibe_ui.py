@@ -56,7 +56,7 @@ def vibe_category_nav(items, current_key=None, label="Categories", select_id="ca
 
 
 @register.inclusion_tag("vibe_ui/num_base_field.html")
-def vibe_num_base_field(field_id, label="", placeholder="Enter value", width_bits=16, default_base="dec"):
+def vibe_num_base_field(field_id, label="", placeholder="Enter value", width_bits=16, default_base="dec", value=""):
     """Render a numeric field with a DEC/HEX/BIN base selector + copy button.
 
     Requires js/num-base-field.js. The element fires a bubbling "numbase:change"
@@ -68,6 +68,7 @@ def vibe_num_base_field(field_id, label="", placeholder="Enter value", width_bit
         "placeholder": placeholder,
         "width_bits": width_bits,
         "default_base": default_base,
+        "value": value,
     }
 
 

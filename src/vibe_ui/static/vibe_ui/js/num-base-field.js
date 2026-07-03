@@ -25,8 +25,14 @@
         return out >>> 0;
     }
 
+    // Bit mask for an unsigned field `width` bits wide. JS bit-shifts are
+    // mod-32 (1 << 32 === 1), so return the full 32-bit mask at/above 32 bits.
+    function bitMask(width) {
+        return width >= 32 ? 0xFFFFFFFF : (((1 << width) >>> 0) - 1);
+    }
+
     function format(value, base, width) {
-        value = value & (((1 << width) >>> 0) - 1);
+        value = (value & bitMask(width)) >>> 0;
         const pad = width;
         switch (base) {
             case 'hex':
@@ -54,7 +60,7 @@
     }
 
     function parse(raw, base, width) {
-        const mask = ((1 << width) >>> 0) - 1;
+        const mask = bitMask(width);
         const s = String(raw || '').trim();
         if (s === '') return { ok: true, value: 0 };
 
@@ -147,7 +153,7 @@
         const select = root.querySelector('.num-field-base');
         const copyBtn = root.querySelector('.num-field-copy');
         const hintEl = root.querySelector('.num-field-hint');
-        const width = parseInt(root.dataset.widthBits, 10) || 16;
+        const width = Math.min(32, Math.max(1, parseInt(root.dataset.widthBits, 10) || 16));
 
         function setHint(msg) {
             if (!hintEl) return;
@@ -172,7 +178,7 @@
         }
 
         function setValue(n) {
-            currentValue = n & (((1 << width) >>> 0) - 1);
+            currentValue = (n & bitMask(width)) >>> 0;
             input.value = format(currentValue, root.dataset.base, width);
         }
 

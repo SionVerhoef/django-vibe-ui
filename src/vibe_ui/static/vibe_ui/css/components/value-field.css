@@ -197,9 +197,9 @@
   white-space: nowrap;
 }
 
-.value-field-copy-format[aria-checked="true"] { font-weight: var(--weight-semibold); }
+.value-field-copy-format[aria-pressed="true"] { font-weight: var(--weight-semibold); }
 
-.value-field-copy-format[aria-checked="true"]::before {
+.value-field-copy-format[aria-pressed="true"]::before {
   content: "\2713";
   position: absolute;
   left: var(--space-3);
