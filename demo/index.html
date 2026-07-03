@@ -261,6 +261,18 @@
     </section>
 
     <section>
+      <h2>Pill tabs</h2>
+      <p class="muted">Segmented pills for filters or tab bars — active pill = accent. CSS-only (this demo toggles active on click; wire panel-switching yourself).</p>
+      <div class="pill-tabs" role="tablist" style="margin-top:var(--space-4)">
+        <button class="pill-tab pill-tab--active" role="tab" aria-selected="true">All</button>
+        <button class="pill-tab" role="tab" aria-selected="false">Length</button>
+        <button class="pill-tab" role="tab" aria-selected="false">Speed</button>
+        <button class="pill-tab" role="tab" aria-selected="false">Torque</button>
+        <button class="pill-tab" role="tab" aria-selected="false">Power</button>
+      </div>
+    </section>
+
+    <section>
       <h2>Accordion / FAQ</h2>
       <div class="faq-container" style="margin-top:var(--space-4)">
         <details class="faq-item" open>
@@ -309,6 +321,18 @@
       t.innerHTML = 'Item added <button class="toast-action">Undo</button>';
       document.getElementById('toasts').appendChild(t);
       setTimeout(() => t.remove(), 3500);
+    });
+
+    // pill-tabs demo: toggle active on click (real tabs wire panel switching)
+    document.querySelectorAll('.pill-tabs').forEach(function (group) {
+      group.addEventListener('click', function (e) {
+        var t = e.target.closest('.pill-tab');
+        if (!t) return;
+        group.querySelectorAll('.pill-tab').forEach(function (p) {
+          p.classList.toggle('pill-tab--active', p === t);
+          p.setAttribute('aria-selected', String(p === t));
+        });
+      });
     });
 
     // value-field demo: a length converter — the SITE-side data + conversion a

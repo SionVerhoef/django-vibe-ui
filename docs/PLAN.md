@@ -86,12 +86,19 @@ Boundary (Option A): package owns the reusable WIDGET; each site supplies units
 - [x] js/copy-format.js (generic payload formatter → window.VibeCopyFormat).
 - [x] `{% vibe_value_field %}` tag + partial; demo wires a length converter to prove reuse.
 
-### Step 6 — `tool-toolbar`, tabs, pills (remaining medium/low)
-- [ ] Port toolbar/share-banner chrome + `js/tool-toolbar.js`; tabs & pills CSS.
+### Step 6 — tabs / pills ✅
+- [x] Ported `pill-tabs` (segmented rounded tabs/filters, active = accent) on
+      semantic tokens; supports `.pill-tab--active` or `aria-selected`; shown in demo.
+- [x] **Left behind** `tool-toolbar` + `tool-card`/`tool-grid`/`tool-category`:
+      these are app plumbing (feature-locks, share/save modals, JSON import,
+      motionconvert's tool directory), not generic UI — same call as value-field's engine.
 
-### Step 7 — Showcase + verify
-- [ ] Add every new field/selector to `demo/index.html` under all three themes.
-- [ ] Verify in both StickerVibez and motionconvert.
+### Step 7 — Showcase + verify ✅ (package-level)
+- [x] Every new field/selector in `demo/index.html` under all three themes.
+- [x] Headless verification: all JS passes `node --check`, every component token
+      resolves, brace balance OK, templatetags compile, all imports wired.
+- [ ] Real-app verify in StickerVibez / motionconvert happens at adoption
+      (Phase 2 / Phase 5) — not blocking the v0.2.0 cut.
 
 **Left behind (site-specific):** `logo` / `logo_mark` (brand identity) and the
 whole-feature pages `drivetrain.css` / `statusword.css` (motionconvert's `pages/`).

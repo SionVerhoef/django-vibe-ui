@@ -7,8 +7,9 @@ visually consistent and get fixes from one place.
 Extracted from the PixRemix (StickerVibez) design system, generalized so any
 site can consume it and re-theme it with a handful of CSS variables.
 
-> **Status:** `v0.1.0` — Phase 1 scaffold. See [`docs/PLAN.md`](docs/PLAN.md)
-> for the full roadmap (Phases 2–5).
+> **Status:** `v0.2.0` (in progress) — adds motionconvert's fields & selectors
+> (num-base-field, value-field, category-nav, pill-tabs) on a three-tier token
+> system. See [`docs/PLAN.md`](docs/PLAN.md) for the full roadmap.
 
 ---
 
@@ -25,11 +26,14 @@ src/vibe_ui/
 │   │   └── overrides.example.css   # copy into YOUR site to re-theme
 │   ├── base/                   # reset, typography, accessibility
 │   ├── layout/                 # container, header, navigation, footer
-│   ├── components/             # buttons, cards, forms, badges, modal, carousel, toast, progress, accordion
+│   ├── components/             # buttons, cards, forms, badges, modal, carousel, toast, progress,
+│   │                           #   accordion, category-nav, num-field, value-field, pill-tabs
 │   └── utilities/              # helpers
-├── static/vibe_ui/js/          # optional progressive-enhancement scripts (accordion.js)
-├── templates/vibe_ui/          # button.html, card.html (optional partials)
-└── templatetags/vibe_ui.py     # {% vibe_button %}, {% vibe_card %}
+├── static/vibe_ui/js/          # optional scripts: accordion, category-nav,
+│                               #   num-base-field, value-field, copy-format
+├── templates/vibe_ui/          # button, card, category_nav, num_base_field, value_field partials
+└── templatetags/vibe_ui.py     # {% vibe_button %} {% vibe_card %} {% vibe_category_nav %}
+                                 #   {% vibe_num_base_field %} {% vibe_value_field %}
 ```
 
 CSS uses native **cascade layers** (`@layer reset, base, layout, components,
@@ -103,6 +107,38 @@ Or the optional template tags:
 python manage.py collectstatic
 ```
 
+## Interactive fields & selectors
+
+Beyond the CSS-only components, the package ships a few JS-backed widgets
+(ported from motionconvert). Include the scripts you use, with `defer`:
+
+```html
+<script src="{% static 'vibe_ui/js/num-base-field.js' %}" defer></script>
+<script src="{% static 'vibe_ui/js/copy-format.js' %}" defer></script>
+<script src="{% static 'vibe_ui/js/value-field.js' %}" defer></script>
+<script src="{% static 'vibe_ui/js/category-nav.js' %}" defer></script>
+```
+
+- **`{% vibe_num_base_field %}`** — integer field with a DEC/HEX/BIN base
+  selector + copy. Fires `numbase:change` (`detail.value/.base/.raw`).
+- **`{% vibe_value_field %}`** — labeled input/output field with a unit
+  **selector**, copy, and a copy-format menu. It's **domain-free** — your site
+  supplies the units and the conversion:
+
+  ```js
+  const el = document.querySelector('[data-field-id="torque"]');
+  el.valueField.setUnits([{ value: 'nm', label: 'N·m', symbol: 'N·m' }, /* … */]);
+  el.addEventListener('valuefield:change', (e) => {
+    /* convert e.detail.value and push to the output via out.valueField.setValue(...) */
+  });
+  ```
+
+- **`{% vibe_category_nav %}`** — desktop link-list + mobile `<select>` nav.
+- **`.pill-tabs` / `.pill-tab`** — segmented tab/filter pills (CSS-only; add
+  `.pill-tab--active` or `aria-selected="true"`).
+
+---
+
 ---
 
 ## Theming: the package owns structure, your site owns the brand
@@ -127,7 +163,7 @@ you **don't fork component CSS** — you override a few tokens.
 }
 ```
 
-That one file re-themes every button, card, badge, form, modal, and toast.
+That one file re-themes every button, card, badge, form, field, selector, and toast.
 
 ---
 
