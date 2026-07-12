@@ -3,7 +3,21 @@
 All notable changes to django-vibe-ui are documented here.
 This project adheres to [Semantic Versioning](https://semver.org/).
 
-## [0.2.1] — ship the font files (unreleased)
+## [0.3.0] — the app tier (unreleased)
+
+### Removed (housekeeping — the long-flagged StickerVibez leftovers)
+- `components/modal.css` — it was StickerVibez's cart drawer (`.cart-panel*`),
+  not a generic modal. The app tier (below) ships a real, accessible modal.
+- `forms.css` app-specific block: `.upload-zone*`, `.upload-preview*`,
+  `.style-tile*`, `.discount-input-group`, and the global
+  `input[type="file"] { display: none }` that supported them.
+- `cards.css`: `.style-card*`, `.trust-card`, `.trust-bar`, `.trust-item`.
+
+These classes were never part of the generic set (flagged in
+`docs/components.md` since 0.1.0) and StickerVibez still ships its own copies —
+nothing consumed them from the package.
+
+## [0.2.1] — ship the font files (2026-07-03)
 
 ### Fixed
 - **`base/typography.css` referenced four `vibe_ui/fonts/*.woff2` files that
@@ -17,7 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 - `__version__` bumped from the stale `0.1.0` to `0.2.1` so wheel metadata
   matches the release tag again.
 
-## [0.2.0] — motionconvert fields & selectors (unreleased)
+## [0.2.0] — motionconvert fields & selectors (2026-07-03)
 
 ### Added
 - **Three-tier token system**: `_globals.css` (invariant scales, shared by all

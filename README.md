@@ -7,9 +7,10 @@ visually consistent and get fixes from one place.
 Extracted from the PixRemix (StickerVibez) design system, generalized so any
 site can consume it and re-theme it with a handful of CSS variables.
 
-> **Status:** `v0.2.0` (in progress) — adds motionconvert's fields & selectors
-> (num-base-field, value-field, category-nav, pill-tabs) on a three-tier token
-> system. See [`docs/PLAN.md`](docs/PLAN.md) for the full roadmap.
+> **Status:** `v0.3.0` (in progress) — adds the **app tier** harvested from
+> InduIndex: an app-shell layout, dark theme, an accessible modal stack, and
+> htmx conventions, alongside the existing marketing tier.
+> See [`docs/PLAN.md`](docs/PLAN.md) for the full roadmap.
 
 ---
 
@@ -56,13 +57,13 @@ always win without specificity wars.
 It's a private package — install straight from GitHub by tag:
 
 ```bash
-pip install "git+ssh://git@github.com/SionVerhoef/django-vibe-ui@v0.1.0"
+pip install "git+ssh://git@github.com/SionVerhoef/django-vibe-ui@v0.3.0"
 ```
 
 Or pin it in `requirements.txt`:
 
 ```
-django-vibe-ui @ git+ssh://git@github.com/SionVerhoef/django-vibe-ui@v0.1.0
+django-vibe-ui @ git+ssh://git@github.com/SionVerhoef/django-vibe-ui@v0.3.0
 ```
 
 ---

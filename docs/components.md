@@ -142,11 +142,10 @@ All are plain `<script defer>` includes, no build step, and degrade gracefully.
 
 ---
 
-## Known app-specific leftovers (to be trimmed)
+## Known app-specific leftovers
 
-Carried in during extraction; **not** part of the generic set, flagged for a
-later trim (see `docs/PLAN.md`):
-
-- `forms.css`: `.upload-zone*`, `.upload-preview*`, `.style-tile*`, `.discount-input-group` (StickerVibez).
-- `modal.css`: it's actually StickerVibez's cart drawer (`.cart-panel*`), not a generic modal.
-- Some `cards.css` classes (`.style-card*`, `.trust-*`) are StickerVibez-specific.
+Trimmed in v0.3.0. The StickerVibez-specific classes carried in during
+extraction (`.upload-zone*`, `.upload-preview*`, `.style-tile*`,
+`.discount-input-group`, the `.cart-panel*` "modal", `.style-card*`,
+`.trust-*`) were removed — StickerVibez still ships its own copies, and
+nothing consumed them from the package.
