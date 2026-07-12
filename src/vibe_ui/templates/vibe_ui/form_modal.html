@@ -1,0 +1,46 @@
+{% comment %}
+The edit-overlay body (vibe_ui.mixins.ModalFormMixin): an htmx GET on an
+edit URL swaps this into app_base's #modal-root; the form hx-posts back
+to the same URL — validation errors re-render here, success answers
+204 + HX-Redirect. js/app/modal.js owns closing (scrim click, the ×
+button, Cancel, Escape), the focus trap, and returning focus.
+{% endcomment %}
+<div class="modal-scrim">
+    <div class="modal card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="card-head">
+            <h2 class="card-title" id="modal-title">{{ modal_title }}</h2>
+            <button class="modal-close" type="button" data-modal-close aria-label="Close">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{{ modal_action }}"
+                  hx-post="{{ modal_action }}" hx-target="#modal-root" hx-swap="innerHTML"
+                  hx-disabled-elt="find button[type='submit']">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    <label class="form-label{% if field.field.required %} form-label-required{% endif %}"
+                           for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% comment %}Django 5.2 points the errored field's
+                    aria-describedby at "<auto_id>_error" — this id closes
+                    that link.{% endcomment %}
+                    {% if field.errors %}
+                    <div id="{{ field.auto_id }}_error">
+                        {% for error in field.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <p class="form-error">{{ error }}</p>
+                {% endfor %}
+                <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">{{ modal_submit }}</button>
+                    <button class="btn btn-ghost" type="button" data-modal-close>Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

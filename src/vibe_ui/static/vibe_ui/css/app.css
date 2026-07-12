@@ -1,0 +1,40 @@
+/* ===================================================================
+   django-vibe-ui — APP-SHELL entry stylesheet
+   Load this ONCE per app page:  {% static 'vibe_ui/css/app.css' %}
+   (Marketing pages load ui.css instead — one entry per page, never both.)
+
+   The app tier is the application chrome harvested from InduIndex:
+   collapsible nav rail, header, light/dark theming, and a component
+   library tuned for data-dense product pages (cards, pills, tables,
+   KPI tiles, forms, the edit-overlay modal, htmx in-flight states).
+
+   @layer order (lowest to highest specificity):
+   reset < base < layout < components < pages < utilities
+
+   THEMING: same contract as ui.css — override tokens in your site's
+   theme.css loaded AFTER this file. The app tier adds a dark scope:
+   re-brands must override :root AND [data-theme="dark"] (see
+   tokens/overrides.example.css). The `pages` layer is declared but
+   empty — your page-specific CSS slots into it.
+   =================================================================== */
+
+@layer reset, base, layout, components, pages, utilities;
+
+/* --- Tokens (unlayered — available everywhere; site overrides win) ---
+   the three shared tiers, then the app tier on top */
+@import url('./tokens/_globals.css');
+@import url('./tokens/_defaults.css');
+@import url('./tokens/_semantic.css');
+@import url('./tokens/_app.css');
+
+/* --- Base (app-tuned reset + typography + a11y) --- */
+@import url('./app/base.css') layer(base);
+
+/* --- Layout (the app shell frame) --- */
+@import url('./app/shell.css') layer(layout);
+
+/* --- Components --- */
+@import url('./app/components.css') layer(components);
+
+/* --- Utilities (shared with the marketing tier) --- */
+@import url('./utilities/helpers.css') layer(utilities);

@@ -1,0 +1,580 @@
+/* App-tier component library (design-system pieces shared across app
+   pages). Page-specific layout belongs in the site's `pages` layer. */
+
+/* ── Buttons ──────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+.btn-primary:hover { filter: brightness(1.05); color: var(--text-on-accent); }
+/* The global focus ring is accent-colored — invisible on the accent fill. */
+.btn-primary:focus-visible { outline-color: var(--text); }
+.btn-secondary {
+  border-color: var(--border-2);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 500;
+}
+.btn-secondary:hover { background: var(--surface-2); color: var(--text); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+.btn-danger {
+  border-color: var(--border-2);
+  background: var(--surface);
+  color: var(--crit);
+}
+.btn-danger:hover { border-color: var(--crit); background: var(--surface-2); }
+.btn-outline-accent {
+  border-color: var(--border-2);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 500;
+}
+.btn-outline-accent:hover { border-color: var(--accent); color: var(--accent); }
+.btn-lg { height: 38px; padding: 0 18px; font-size: 13px; }
+.btn-full { width: 100%; }
+
+/* ── Cards ────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+a.card { color: inherit; display: block; }
+a.card:hover { border-color: var(--border-2); color: inherit; }
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.card-title { font-size: 14px; font-weight: 600; }
+.card-title .count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+  font-weight: 400;
+}
+.card-body { padding: 16px 18px; }
+.card-link { font-size: 12px; font-weight: 500; }
+
+/* ── Badges & chips ───────────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.pill .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.pill-ok { color: var(--ok); background: var(--ok-soft); }
+.pill-warn { color: var(--warn); background: var(--warn-soft); }
+.pill-crit { color: var(--crit); background: var(--crit-soft); }
+.pill-muted { color: var(--text-2); background: var(--surface-3); }
+.pill-accent { color: var(--accent); background: var(--accent-soft); }
+
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.tag-chip svg { flex: none; }
+.tag-chip .mono { font-size: 11px; }
+
+/* Severity text/dot colours for status-bearing rows and labels. */
+.sev-crit { color: var(--crit); }
+.sev-warn { color: var(--warn); }
+.sev-ok { color: var(--ok); }
+.sev-muted { color: var(--text-3); }
+.dot-badge {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ── Segmented tabs (the pill-group filter) ───────────────────────── */
+.seg-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface-2);
+  border-radius: 9px;
+}
+.seg-tab {
+  height: 30px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-2);
+  text-decoration: none;
+}
+.seg-tab:hover { color: var(--text); }
+.seg-tab.is-active {
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+
+/* Toolbar row above a grid/list: tabs left, count right. */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.toolbar-count { font-size: 12px; color: var(--text-3); }
+.toolbar-count strong { color: var(--text-2); font-weight: 600; }
+
+/* ── Forms ────────────────────────────────────────────────────────── */
+.form-group { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.form-label-required::after { content: " *"; color: var(--crit); }
+.form-input,
+input[type="text"], input[type="search"], input[type="email"],
+input[type="password"], input[type="number"], input[type="url"],
+select, textarea {
+  width: 100%;
+  padding: 8px 11px;
+  border: 1px solid var(--border-2);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+}
+input[type="checkbox"], input[type="radio"], input[type="file"] { width: auto; }
+.form-input:focus, input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+/* Native selects: hide the UA arrow, draw our own chevron. A data-URI
+   can't use currentColor, so each theme embeds its --text-3 value;
+   select.form-input repeats the selector to outrank .form-input's
+   background shorthand. */
+select, select.form-input {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a09a90' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+  cursor: pointer;
+}
+[data-theme="dark"] select, [data-theme="dark"] select.form-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23726b60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+
+.form-help { font-size: 12px; color: var(--text-3); margin-top: 6px; }
+.form-error { font-size: 12.5px; color: var(--crit); margin-top: 6px; }
+
+/* In-flight htmx feedback: htmx puts .htmx-request on the element that
+   carries hx-post (the form) while a request runs; hx-disabled-elt on
+   those forms blocks the double-submit, this makes the wait visible. */
+form.htmx-request button[type="submit"] {
+  opacity: .6;
+  pointer-events: none;
+}
+form.htmx-request button[type="submit"]::after {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: htmx-spin .6s linear infinite;
+}
+form.htmx-request select[disabled],
+form.htmx-request input[disabled] { opacity: .6; cursor: progress; }
+@keyframes htmx-spin { to { transform: rotate(1turn); } }
+@media (prefers-reduced-motion: reduce) {
+  form.htmx-request button[type="submit"]::after { animation: none; }
+}
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+/* Drag-drop upload widget (js/app/shell.js wires the drop handling;
+   pair with a visually-hidden .file-upload-input inside a <label>). */
+.file-upload-drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 14px;
+  border: 1.5px dashed var(--border-2);
+  border-radius: 10px;
+  color: var(--text-3);
+  font-size: 12.5px;
+  text-align: center;
+  cursor: pointer;
+}
+.file-upload-drop:hover,
+.file-upload-drop.is-dragover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.file-upload-drop.is-dragover { background: var(--surface-2); }
+.file-upload-input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-3);
+}
+.search-box input {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+  width: 160px;
+  padding: 0;
+}
+.search-box svg { flex: none; }
+
+/* ── Alerts / messages ────────────────────────────────────────────── */
+.alert {
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  background: var(--surface);
+}
+.alert-success { border-color: var(--ok); background: var(--ok-soft); color: var(--ok); }
+.alert-danger { border-color: var(--crit); background: var(--crit-soft); color: var(--crit); }
+.alert-info { border-color: var(--border-2); color: var(--text-2); }
+
+.empty-note {
+  padding: 26px 18px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 13px;
+}
+
+/* ── List rows (inside cards: files, ledgers, item lists) ─────────── */
+.row-list li, .row-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+.row-list li:last-child, .row-item:last-child { border-bottom: none; }
+.row-item:hover { background: var(--surface-2); }
+.row-main { flex: 1; min-width: 0; }
+.row-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+a.row-title { color: inherit; }
+a.row-title:hover { color: var(--accent); }
+.row-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+  font-size: 11.5px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+/* ── Data tables ──────────────────────────────────────────────────── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.data-table th {
+  text-align: left;
+  padding: 11px 18px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  border-bottom: 1px solid var(--border);
+}
+.data-table td {
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.data-table tbody tr:hover { background: var(--surface-2); }
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table .num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.table-scroll { overflow-x: auto; }
+
+/* Meter bar (a tiny inline percentage bar for rows/tables). */
+.meter {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--surface-3);
+  margin-top: 3px;
+  overflow: hidden;
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ── KPI / stat tiles ─────────────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--gap);
+}
+.kpi-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 14px 15px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.kpi-tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.kpi-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kpi-dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: currentColor;
+}
+.kpi-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin: 9px 0 2px;
+}
+.kpi-value {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+}
+.kpi-unit {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+}
+.kpi-target {
+  font-size: 10px;
+  color: var(--text-3);
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+/* Numbered step list (explainers, next-step guides). */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+  text-align: left;
+}
+.steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.steps li strong { color: var(--text); }
+.steps-num {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Pagination ───────────────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* ── Page hero (detail-page headers) ──────────────────────────────── */
+.page-hero {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.page-hero-main { flex: 1; min-width: 240px; }
+.page-hero-kicker {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.page-hero-title {
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  margin-bottom: 9px;
+  overflow-wrap: anywhere;
+}
+.page-hero-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.page-hero-aside {
+  flex: none;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+.page-hero-aside .updated {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ok);
+}
+.page-hero-aside .updated .dot-badge { width: 7px; height: 7px; }
+
+/* ── Edit overlay (templates/vibe_ui/form_modal.html + js/app/modal.js) ── */
+/* The page behind an open edit overlay must not scroll (modal.js). */
+body.modal-open { overflow: hidden; }
+
+.modal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 9vh 18px 18px;
+  background: rgba(24, 18, 10, .42);
+  animation: modal-fade .16s ease-out;
+}
+.modal {
+  width: min(520px, 100%);
+  max-height: 82vh;
+  overflow: auto;
+  animation: modal-pop .18s ease-out;
+}
+.modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-3);
+  cursor: pointer;
+}
+.modal-close:hover { background: var(--surface-2); color: var(--text); }
+@keyframes modal-fade { from { opacity: 0; } }
+@keyframes modal-pop { from { opacity: 0; transform: translateY(8px) scale(.98); } }

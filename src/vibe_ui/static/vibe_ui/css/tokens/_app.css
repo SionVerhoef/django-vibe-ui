@@ -1,0 +1,79 @@
+/* ===================================================================
+   APP-TIER tokens — the application-shell aesthetic (harvested from
+   InduIndex; Claude Design "Alarm Analyzer" lineage: paper surfaces,
+   amber accent). Imported ONLY by app.css, after the three shared
+   tiers — marketing pages (ui.css) never load this file, so the two
+   entries can ship different defaults without fighting.
+
+   Light is the default; [data-theme="dark"] on <html> flips the ramp
+   (persisted by js/app/shell.js + templates/vibe_ui/prepaint.html).
+   [data-density="compact"] is reserved for a denser mode — only
+   --pad/--gap change.
+
+   Text ramps clear WCAG AA (4.5:1) on --bg/--surface/--surface-2;
+   --text-on-accent is dark ink that clears AA on the amber fill in
+   BOTH themes, so it deliberately does not flip.
+
+   RE-BRANDING: because the dark block below re-declares the ramp under
+   [data-theme="dark"], a site override must set BOTH scopes — a bare
+   :root override wins in light mode but loses to the dark block.
+   See tokens/overrides.example.css → "App tier".
+   =================================================================== */
+:root {
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --surface-2: #f1efec;
+  --surface-3: #eae7e2;
+  --border: #e6e3dd;
+  --border-2: #d7d3cc;
+  --text: #221f1b;
+  --text-2: #625d55;
+  --text-3: #6f6a62;
+  --accent: #c2740a;
+  --text-on-accent: #1b1408;
+  --accent-soft: #f8ecd6;
+  --ok: #3f7a54;
+  --ok-soft: #e7efe8;
+  --warn: #b9770f;
+  --warn-soft: #f8eed9;
+  --crit: #b24a2b;
+  --crit-soft: #f7e4dc;
+  --shadow: 0 1px 2px rgba(40, 30, 20, .04), 0 2px 8px rgba(40, 30, 20, .05);
+  --pad: 26px;
+  --gap: 18px;
+
+  /* Fonts follow the brand tier (_defaults.css / the site's theme.css);
+     --font-mono comes from _globals.css. */
+  --font-sans: var(--font-body);
+
+  /* Shell dimensions (nav rail + header). */
+  --nav-w: 64px;
+  --nav-w-expanded: 212px;
+  --header-h: 52px;
+}
+
+[data-theme="dark"] {
+  --bg: #18150f;
+  --surface: #221e17;
+  --surface-2: #2a251d;
+  --surface-3: #332d24;
+  --border: #37312a;
+  --border-2: #4a4137;
+  --text: #ece7de;
+  --text-2: #a49d90;
+  --text-3: #9e9687;
+  --accent: #e5972f;
+  --accent-soft: #3a2e1a;
+  --ok: #6fae82;
+  --ok-soft: #24302a;
+  --warn: #e0a041;
+  --warn-soft: #372c18;
+  --crit: #dc7a55;
+  --crit-soft: #392420;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 3px 10px rgba(0, 0, 0, .28);
+}
+
+[data-density="compact"] {
+  --pad: 16px;
+  --gap: 12px;
+}

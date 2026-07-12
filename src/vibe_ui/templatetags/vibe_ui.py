@@ -72,6 +72,27 @@ def vibe_num_base_field(field_id, label="", placeholder="Enter value", width_bit
     }
 
 
+@register.inclusion_tag("vibe_ui/pagination.html", takes_context=True)
+def vibe_pagination(context, page_obj, param="page"):
+    """Render Previous / "Page N of M" / Next for a Django Paginator page.
+
+    Usage:
+        {% vibe_pagination page_obj %}
+
+    Preserves the rest of the query string (filters, tabs) across page
+    changes; ``param`` is the query parameter that carries the page number.
+    """
+    request = context.get("request")
+    base = "?"
+    if request is not None:
+        params = request.GET.copy()
+        params.pop(param, None)
+        qs = params.urlencode()
+        if qs:
+            base = "?" + qs + "&"
+    return {"page_obj": page_obj, "param": param, "base": base}
+
+
 @register.inclusion_tag("vibe_ui/value_field.html")
 def vibe_value_field(field_id, label="", mode="input", value="", placeholder="Enter value",
                      variant="", category="", default_unit=""):
