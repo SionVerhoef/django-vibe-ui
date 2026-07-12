@@ -3,9 +3,10 @@
 Two repos make up the system:
 
 - **`django-vibe-ui`** (this repo) — the pip-installable **package**: design
-  tokens, CSS components, template partials. Sites depend on it and get fixes
-  centrally by bumping a version.
-- **`django-vibe-template`** (later) — a **Cookiecutter project template** that
+  tokens, CSS components, template partials, and (since v0.3.0) the app-shell
+  tier with its view mixins. Sites depend on it and get fixes centrally by
+  bumping a version.
+- **`django-vibe-template`** — a **Cookiecutter project template** that
   scaffolds a *new* Django site already wired to depend on this package.
 
 The guiding principle throughout: **the package owns structure + components +
@@ -105,6 +106,31 @@ whole-feature pages `drivetrain.css` / `statusword.css` (motionconvert's `pages/
 
 ---
 
+## v0.3.0 — The app tier (InduIndex harvest) ✅
+
+InduIndex was generated from django-vibe-template but grew its own, more
+mature app design system (AA-verified tokens, dark theme, nav-rail shell,
+a11y-complete modal stack, htmx conventions) while only using vibe-ui on
+error/legal pages. v0.3.0 promotes that system into the package as a second
+entry point, so app-style products and marketing sites share one dependency.
+
+- [x] `tokens/_app.css`: AA light+dark ramps, status trio, shell dims,
+      density hook; re-brand contract (both theme scopes) in
+      `overrides.example.css`.
+- [x] `app.css` entry: app base/shell/components on the shared cascade-layer
+      order; marketing `ui.css` untouched.
+- [x] App shell: nav rail + header + mobile drawer (`shell.css`/`shell.js`),
+      `vibe_ui/app_base.html` skeleton, `prepaint.html` anti-FOUC include.
+- [x] Modal stack: `vibe_ui.mixins.ModalFormMixin` + `form_modal.html` +
+      `modal.js` (focus trap/restore, scroll lock, 204 + HX-Redirect).
+- [x] htmx layer: vendored 2.0.6, in-flight CSS, focus restore across swaps.
+- [x] `{% vibe_pagination %}`; housekeeping (leftover trim, version drift);
+      test suite + CI.
+- Left behind in InduIndex by design: rate-chart, state-select, Issue-state
+  pills, qa-list, the agent chat tray (domain-specific).
+
+---
+
 ## Phase 2 — Prove it by re-consuming in StickerVibez itself
 
 Lowest-risk first adoption: swap StickerVibez's local `static/css/` for the
@@ -118,14 +144,11 @@ package, because it's the same source — **pixel-parity is trivially verifiable
 - [ ] Keep StickerVibez's `pages/*.css` loaded per page via `{% block extra_css %}`.
 - [ ] Visual diff key pages (home, styles, cart, upload, results) — confirm parity.
 - [ ] Delete the now-duplicated component/token CSS from StickerVibez.
-- [ ] **Trim app-specific CSS that came along in the extraction** (found while
-      building the demo): `components/modal.css` is actually StickerVibez's cart
-      drawer (`.cart-panel`/`.cart-overlay`), and `cards.css`/`forms.css` carry
-      StickerVibez-only classes (`.style-card`, `.trust-bar`, `.upload-zone`,
-      `.style-tiles`). Either move these back to StickerVibez's `pages/` CSS or
-      generalize them. The genuinely-generic pieces (`.btn`, `.card`, `.badge`,
-      `.form-*`, `.alert`, `.toast`, `.spinner`, `.progress-bar`, `.steps`,
-      accordion) are validated by `demo/index.html`.
+- [x] ~~Trim app-specific CSS that came along in the extraction~~ — done in
+      v0.3.0: `modal.css` (the cart drawer), `.style-card`/`.trust-*`,
+      `.upload-zone*`/`.style-tile*`/`.discount-input-group` removed from the
+      package. StickerVibez keeps its own copies until adoption, when they
+      move into its `pages/` CSS.
 - [ ] Pin the version in `requirements.txt`.
 
 **Exit criteria:** StickerVibez renders identically while sourcing its design
@@ -133,21 +156,21 @@ system from the package.
 
 ---
 
-## Phase 3 — Build the project template (`django-vibe-template`)
+## Phase 3 — Project template (`django-vibe-template`)
 
-Distill the skeleton both existing sites share (Django layout, Docker, Nginx,
-Gunicorn, `base.html`, accounts) into a Cookiecutter that depends on this package.
+- [x] The Cookiecutter exists (v0.1.0): production deploy stack (Docker,
+      nginx+certbot, Gunicorn, tag-driven CI deploys, nonce CSP), optional
+      allauth accounts, `base.html` wired to `ui.css` + a generated
+      `theme.css` — InduIndex was generated from it.
+- [ ] **App-shell scaffold mode**: a `project_type` (marketing | app) choice
+      that scaffolds a base extending `vibe_ui/app_base.html` (nav rail,
+      htmx, `#modal-root`, allauth-on-app-tokens bridge) against v0.3.0.
+- [ ] Backports from InduIndex: CI/test tweaks, docs + AGENTS.md scaffold,
+      `use_celery` toggle (tracked in django-vibe-template's beads).
 
-- [ ] New repo `django-vibe-template` (Cookiecutter).
-- [ ] `cookiecutter.json` (project name, slug, brand accent, domain…).
-- [ ] Scaffold: settings split, `base.html` loading `vibe_ui/css/ui.css` +
-      generated `theme.css` seeded from the chosen accent, `INSTALLED_APPS`
-      already including `vibe_ui`, `requirements.txt` pinning the package.
-- [ ] Carry over the shared Docker/Nginx/Gunicorn config (both sites match).
-- [ ] Optional starter pages (home, pricing, legal) using the components.
-
-**Exit criteria:** `cookiecutter django-vibe-template` produces a runnable site
-that already looks on-brand.
+**Exit criteria:** `cookiecutter django-vibe-template` with
+`project_type=app` produces a runnable product shell that looks like an app
+on first boot.
 
 ---
 
@@ -158,6 +181,17 @@ The real-world test of the whole system — the new site you're about to begin.
 - [ ] Generate it from the template.
 - [ ] Build site-specific pages; feed any genuinely reusable component **back
       into the package** (then bump + re-pin).
+
+---
+
+## Phase 4b — Collapse InduIndex's two design systems
+
+The payoff of v0.3.0 (tracked as `induindex-8dm` in InduIndex's beads):
+swap InduIndex's local `static/css/app/`, `static/js/app/{shell,modal}.js`,
+`core/modals.py`, and `app_base.html` for the package equivalents; keep the
+domain pieces (rate-chart, state-select, issue partials, chat tray) in its
+`pages/` layer. Pixel-parity should be near-trivial — the package code IS
+InduIndex's code.
 
 ---
 

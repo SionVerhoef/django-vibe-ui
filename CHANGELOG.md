@@ -5,6 +5,43 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [0.3.0] — the app tier (unreleased)
 
+### Added — the app tier, harvested from InduIndex
+- **`app.css` entry point** alongside `ui.css` (one entry per page): the
+  application-shell design system that matured through InduIndex's a11y and
+  interaction review batches.
+- **`tokens/_app.css`** — AA-verified light + dark ramps
+  (`[data-theme="dark"]`), status trio (`--ok`/`--warn`/`--crit` + `-soft`
+  fills), non-flipping `--text-on-accent` ink, shell dimensions, and a
+  `[data-density="compact"]` hook. Re-brand contract documented in
+  `overrides.example.css` (override both theme scopes).
+- **App shell** — `app/shell.css` + `js/app/shell.js`: collapsible nav rail,
+  header, mobile overlay drawer (`aria-expanded`/`aria-controls`, Escape
+  refocuses the toggle), theme toggle with localStorage persistence, and
+  `templates/vibe_ui/prepaint.html` (anti-FOUC pre-paint include).
+- **App components** — `app/components.css`: buttons (dark-ink primary,
+  AA focus ring), cards, pills/tags, severity helpers, segmented tabs,
+  toolbar, forms (custom select chevron per theme, linked error styling),
+  drag-drop upload zone, search box, alerts, empty states, row lists, data
+  tables, meter, KPI/stat tiles, numbered steps, pagination, page hero, and
+  the edit-overlay modal.
+- **Modal stack** — `vibe_ui.mixins.ModalFormMixin` (+ `safe_next_url`):
+  htmx GET renders `vibe_ui/form_modal.html` into `#modal-root`, valid POST
+  answers `204 + HX-Redirect`, no-JS falls back to the full page.
+  `js/app/modal.js` provides the focus trap, scroll lock, Escape/scrim
+  close, and focus return to the opener. Form errors render into
+  `<auto_id>_error` containers matching Django 5.2's automatic
+  `aria-describedby`.
+- **htmx layer** — vendored `js/vendor/htmx.min.js` (2.0.6, CSP-safe),
+  `.htmx-request` in-flight spinner/dim CSS (reduced-motion aware), and
+  focus restore across swaps in `shell.js`.
+- **`templates/vibe_ui/app_base.html`** — extendable shell skeleton (skip
+  link, single-h1 header, messages strip, `#modal-root`, script wiring).
+- **`{% vibe_pagination page_obj %}`** — Previous / "Page N of M" / Next,
+  preserving the rest of the query string.
+- **Test suite + CI** — 17 DB-free tests (mixin flow, pagination tag,
+  app_base render, and a CSS `url()` integrity scan guarding against the
+  v0.2.1 missing-fonts class of bug) run on GitHub Actions.
+
 ### Removed (housekeeping — the long-flagged StickerVibez leftovers)
 - `components/modal.css` — it was StickerVibez's cart drawer (`.cart-panel*`),
   not a generic modal. The app tier (below) ships a real, accessible modal.
