@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "server",
+  "dolt_database": "django_vibe_ui",
+  "project_id": "b9176435-00c0-46cd-b4df-87d75d6d2fc0"
+}
