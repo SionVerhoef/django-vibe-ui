@@ -37,7 +37,6 @@
 @import url('./components/cards.css') layer(components);
 @import url('./components/forms.css') layer(components);
 @import url('./components/badges.css') layer(components);
-@import url('./components/modal.css') layer(components);
 @import url('./components/carousel.css') layer(components);
 @import url('./components/toast.css') layer(components);
 @import url('./components/progress.css') layer(components);

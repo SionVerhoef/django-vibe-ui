@@ -1,20 +1,24 @@
 # Tokens & Theming
 
-django-vibe-ui uses a **three-tier** CSS custom-property system. Components read
-only the *semantic* roles; a site re-brands by overriding the *brand* layer.
+django-vibe-ui uses a **tiered** CSS custom-property system. Components read
+only role tokens; a site re-brands by overriding the *brand* layer.
 
 ```
 _globals.css    invariant scales — SHARED across all sites
       +
 _defaults.css   brand palette + fonts — OVERRIDE these per site
       ↓ mapped by
-_semantic.css   roles components consume — auto-follow the brand
+_semantic.css   roles the marketing components consume
+      +
+_app.css        the APP tier: light/dark ramps + status colors + shell dims
+                (loaded only by app.css — see §4)
       ↓ used by
-components       .btn, .card, .value-field, .num-field, …
+components       .btn, .card, .value-field, .kpi-tile, …
 ```
 
-All three are `@import`ed (unlayered) by `ui.css`, so a site override loaded
-*after* `ui.css` always wins.
+The tokens are `@import`ed (unlayered) by the entry stylesheet — `ui.css`
+(marketing pages) or `app.css` (app pages; one entry per page, never both) —
+so a site override loaded *after* the entry always wins.
 
 ---
 
@@ -81,6 +85,34 @@ brand re-themes every role. Prefer these names in any new component.
 | `--border-focus` | focused field |
 | `--accent-subtle` | tinted accent wash (`color-mix`) |
 | `--ring` | focus ring box-shadow |
+
+---
+
+## 4. App tier — `tokens/_app.css` (app.css only)
+
+The application-shell aesthetic harvested from InduIndex. Ships **literal,
+AA-verified values** for both themes: `:root` is light,
+`[data-theme="dark"]` on `<html>` flips the ramp (persisted by
+`js/app/shell.js` + the `vibe_ui/prepaint.html` include).
+
+| Group | Tokens | Notes |
+|---|---|---|
+| Page + surfaces | `--bg` `--surface` `--surface-2` `--surface-3` | paper ramp, 0 → 3 = recessed |
+| Borders | `--border` `--border-2` | 2 = emphasized |
+| Text ramp | `--text` `--text-2` `--text-3` | all AA (4.5:1) on `--bg`/`--surface`/`--surface-2` |
+| Accent | `--accent` `--accent-soft` `--text-on-accent` | default ink clears AA on the amber fill in **both** themes |
+| Status | `--ok` `--warn` `--crit` + `--ok-soft` `--warn-soft` `--crit-soft` | text color + soft fill pairs |
+| Elevation | `--shadow` | single soft shadow |
+| Density | `--pad` `--gap` | `[data-density="compact"]` tightens both |
+| Fonts | `--font-sans` | follows `--font-body`; `--font-mono` from globals |
+| Shell | `--nav-w` `--nav-w-expanded` `--header-h` | nav rail + header dimensions |
+
+**Re-branding the app tier:** because `_app.css` re-declares the ramp under
+`[data-theme="dark"]`, your override must set **both scopes** — a bare
+`:root` override wins in light mode but loses to the dark block. Dark
+accents usually need to be brighter (the accent doubles as link text), and a
+brighter fill usually needs a dark `--text-on-accent`. See the worked
+example at the bottom of `tokens/overrides.example.css`.
 
 ---
 

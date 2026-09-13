@@ -7,9 +7,10 @@ visually consistent and get fixes from one place.
 Extracted from the PixRemix (StickerVibez) design system, generalized so any
 site can consume it and re-theme it with a handful of CSS variables.
 
-> **Status:** `v0.2.0` (in progress) — adds motionconvert's fields & selectors
-> (num-base-field, value-field, category-nav, pill-tabs) on a three-tier token
-> system. See [`docs/PLAN.md`](docs/PLAN.md) for the full roadmap.
+> **Status:** `v0.3.0` (in progress) — adds the **app tier** harvested from
+> InduIndex: an app-shell layout, dark theme, an accessible modal stack, and
+> htmx conventions, alongside the existing marketing tier.
+> See [`docs/PLAN.md`](docs/PLAN.md) for the full roadmap.
 
 ---
 
@@ -17,7 +18,7 @@ site can consume it and re-theme it with a handful of CSS variables.
 
 - **[docs/components.md](docs/components.md)** — every component: classes, markup, the JS widget APIs, and template tags.
 - **[docs/tokens.md](docs/tokens.md)** — full token reference (globals · brand · semantic) + the theming guide (incl. dark mode).
-- **[demo/index.html](demo/index.html)** — live showcase of every component under three brand themes. Run `python3 -m http.server` in the repo root and open `/demo/`.
+- **[demo/index.html](demo/index.html)** — marketing-tier showcase under three brand themes; **[demo/app.html](demo/app.html)** — the app shell (nav rail, dark toggle, modal). Run `python3 -m http.server` in the repo root and open `/demo/`.
 - **[docs/PLAN.md](docs/PLAN.md)** — roadmap · **[CHANGELOG.md](CHANGELOG.md)** — changes.
 
 ---
@@ -27,22 +28,29 @@ site can consume it and re-theme it with a handful of CSS variables.
 ```
 src/vibe_ui/
 ├── static/vibe_ui/css/
-│   ├── ui.css                  # entry point — load this once per page
+│   ├── ui.css                  # MARKETING entry — landing/legal/content pages
+│   ├── app.css                 # APP entry — product pages (shell + dark theme)
+│   │                           #   one entry per page, never both
 │   ├── tokens/
 │   │   ├── _globals.css        # invariant scales (spacing/radius/type/motion) — shared across ALL sites
 │   │   ├── _defaults.css       # brand palette + fonts — override these per site
-│   │   ├── _semantic.css       # roles components consume (--surface/--text/--border…) — auto-follow the brand
+│   │   ├── _semantic.css       # roles the marketing components consume
+│   │   ├── _app.css            # app tier: light/dark ramps, status colors, shell dims
 │   │   └── overrides.example.css   # copy into YOUR site to re-theme
-│   ├── base/                   # reset, typography, accessibility
-│   ├── layout/                 # container, header, navigation, footer
-│   ├── components/             # buttons, cards, forms, badges, modal, carousel, toast, progress,
-│   │                           #   accordion, category-nav, num-field, value-field, pill-tabs
-│   └── utilities/              # helpers
-├── static/vibe_ui/js/          # optional scripts: accordion, category-nav,
-│                               #   num-base-field, value-field, copy-format
-├── templates/vibe_ui/          # button, card, category_nav, num_base_field, value_field partials
-└── templatetags/vibe_ui.py     # {% vibe_button %} {% vibe_card %} {% vibe_category_nav %}
-                                 #   {% vibe_num_base_field %} {% vibe_value_field %}
+│   ├── base/                   # marketing reset, typography, accessibility
+│   ├── layout/                 # marketing container, header, navigation, footer
+│   ├── components/             # marketing: buttons, cards, forms, badges, carousel, toast,
+│   │                           #   progress, accordion, category-nav, num-field, value-field, pill-tabs
+│   ├── app/                    # app tier: base, shell (nav rail), components
+│   └── utilities/              # helpers (shared)
+├── static/vibe_ui/js/          # widgets: accordion, category-nav, num-base-field,
+│   │                           #   value-field, copy-format
+│   ├── app/                    # shell.js (theme/nav/drawer/focus), modal.js (edit overlay)
+│   └── vendor/htmx.min.js      # vendored htmx 2.0.6 (CSP-safe, no CDN)
+├── templates/vibe_ui/          # app_base.html skeleton, form_modal, prepaint, pagination,
+│                               #   button/card/category_nav/num_base_field/value_field partials
+├── mixins.py                   # ModalFormMixin + safe_next_url (the edit-overlay pattern)
+└── templatetags/vibe_ui.py     # {% vibe_button %} {% vibe_card %} {% vibe_pagination %} …
 ```
 
 CSS uses native **cascade layers** (`@layer reset, base, layout, components,
@@ -56,13 +64,13 @@ always win without specificity wars.
 It's a private package — install straight from GitHub by tag:
 
 ```bash
-pip install "git+ssh://git@github.com/SionVerhoef/django-vibe-ui@v0.1.0"
+pip install "git+ssh://git@github.com/SionVerhoef/django-vibe-ui@v0.3.0"
 ```
 
 Or pin it in `requirements.txt`:
 
 ```
-django-vibe-ui @ git+ssh://git@github.com/SionVerhoef/django-vibe-ui@v0.1.0
+django-vibe-ui @ git+ssh://git@github.com/SionVerhoef/django-vibe-ui@v0.3.0
 ```
 
 ---
@@ -147,6 +155,38 @@ Beyond the CSS-only components, the package ships a few JS-backed widgets
   `.pill-tab--active` or `aria-selected="true"`).
 
 ---
+
+## The app tier: shell, dark theme, modals, htmx
+
+Product/app pages load `app.css` instead of `ui.css` and extend the shell
+skeleton — nav rail, header, light/dark theming, and an accessible
+edit-overlay modal stack come wired:
+
+```html
+{% extends "vibe_ui/app_base.html" %}
+{% block brand_name %}Acme{% endblock %}
+{% block nav_items %}
+  <a class="nav-item" href="{% url 'projects:list' %}" title="Projects">…</a>
+{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}…{% endblock %}
+```
+
+Form views become modals with one mixin — htmx GET opens the dialog in
+`#modal-root`, valid POST answers `204 + HX-Redirect`, and without JS the
+same URL serves the full page:
+
+```python
+from vibe_ui.mixins import ModalFormMixin
+
+class ProjectUpdate(ModalFormMixin, UpdateView):
+    model = Project
+    fields = ["name"]
+    modal_title = "Edit project"
+```
+
+htmx 2.0.6 is vendored (CSP-safe), in-flight states are styled, and focus
+survives swaps. See [docs/components.md](docs/components.md) → *App tier*.
 
 ---
 

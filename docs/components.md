@@ -142,11 +142,104 @@ All are plain `<script defer>` includes, no build step, and degrade gracefully.
 
 ---
 
-## Known app-specific leftovers (to be trimmed)
+## App tier (`app.css`)
 
-Carried in during extraction; **not** part of the generic set, flagged for a
-later trim (see `docs/PLAN.md`):
+The application-shell design system (from InduIndex). Load
+`{% static 'vibe_ui/css/app.css' %}` **instead of** `ui.css` on app pages —
+one entry per page. The fastest way in is to extend the shell skeleton:
 
-- `forms.css`: `.upload-zone*`, `.upload-preview*`, `.style-tile*`, `.discount-input-group` (StickerVibez).
-- `modal.css`: it's actually StickerVibez's cart drawer (`.cart-panel*`), not a generic modal.
-- Some `cards.css` classes (`.style-card*`, `.trust-*`) are StickerVibez-specific.
+```html
+{% extends "vibe_ui/app_base.html" %}
+{% block brand_name %}Acme{% endblock %}
+{% block nav_items %}
+  <a class="nav-item{% if section == 'projects' %} is-active{% endif %}"
+     href="{% url 'projects:list' %}" title="Projects">
+    <span class="nav-item-icon">(svg)</span>
+    <span class="nav-item-label">Projects</span>
+  </a>
+{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}…{% endblock %}
+```
+
+The skeleton wires the skip link, single-h1 header, messages strip, mobile
+drawer, theme toggle, `#modal-root`, and the three scripts (vendored htmx +
+`js/app/shell.js` + `js/app/modal.js`). Account/sign-out links go in
+`{% block nav_user %}` so they stay reachable in the collapsed rail.
+
+### Shell classes
+`.app` frame · `.app-nav` rail (`.nav-brand`, `.nav-item` + `-icon`/`-label`,
+`.is-active`, `.nav-spacer`, `.nav-user`, `.avatar`) · `.app-header`
+(`.app-header-title`, `.crumb`/`.crumb-sep`, `.app-header-actions`) ·
+`.app-content` · `.content-narrow`. State attributes on `<html>`:
+`data-theme="dark"`, `data-nav="expanded"`, `data-nav-open` (mobile),
+`data-density="compact"`.
+
+### Components
+| Component | Classes |
+|---|---|
+| Buttons | `.btn` + `.btn-primary` / `-secondary` / `-ghost` / `-danger` / `-outline-accent`, sizes `.btn-lg` `.btn-full` |
+| Cards | `.card`, `.card-head`, `.card-title` (+ `.count`), `.card-body`, `.card-link`; `a.card` |
+| Pills & chips | `.pill` (+ `.dot`) with `.pill-ok/-warn/-crit/-muted/-accent`; `.tag-chip` |
+| Severity helpers | `.sev-crit/-warn/-ok/-muted`, `.dot-badge` |
+| Segmented tabs | `.seg-tabs` / `.seg-tab` (+ `.is-active`); `.toolbar` / `.toolbar-count` |
+| Forms | `.form-group`, `.form-label` (+ `-required`), `.form-input`, `.form-help`, `.form-error`, `.form-actions`, `.search-box`, `.file-upload-drop` (+ `.is-dragover`) / `.file-upload-input` |
+| Alerts | `.alert` + `.alert-success/-danger/-info`; `.empty-note` |
+| Lists & tables | `.row-list`/`.row-item` (+ `.row-main`/`-title`/`-sub`/`-meta`), `.data-table` (+ `.num`, `.table-scroll`), `.meter` |
+| KPI / stat tiles | `.kpi-grid`, `.kpi-tile` (+ `-top`), `.kpi-label`, `.kpi-dot`, `.kpi-value-row`, `.kpi-value`, `.kpi-unit`, `.kpi-target` |
+| Steps | `.steps` / `.steps-num` |
+| Pagination | `.pagination` — or just `{% vibe_pagination page_obj %}` |
+| Page hero | `.page-hero` family (detail-page headers) |
+| Modal | `.modal-scrim`, `.modal`, `.modal-close`, `body.modal-open` |
+
+### The edit-overlay modal stack
+Full-stack pattern — three pieces that ship together:
+
+1. **`vibe_ui.mixins.ModalFormMixin`** — mix into a Create/Update/FormView
+   ahead of the other mixins. htmx GET renders `vibe_ui/form_modal.html`
+   (just the dialog) into `#modal-root`; a valid htmx POST answers
+   `204 + HX-Redirect`; without JS the same URL serves its standalone page.
+   Set `modal_title` / `modal_submit`. `?next=` is honored via
+   `safe_next_url()` (open-redirect validated).
+2. **`vibe_ui/form_modal.html`** — `role="dialog" aria-modal="true"`, renders
+   any Django form, wraps field errors in `<auto_id>_error` containers that
+   Django 5.2's automatic `aria-describedby` points at.
+3. **`js/app/modal.js`** — focus trap (Tab cycles inside), focus first field
+   on open, scroll lock, close via `[data-modal-close]`/scrim/Escape, focus
+   returned to the opener. Also submits `form[data-autosubmit]` on change.
+
+Open it from any page with:
+```html
+<button class="btn btn-secondary"
+        hx-get="{% url 'project-edit' project.pk %}"
+        hx-target="#modal-root" hx-swap="innerHTML">Edit</button>
+```
+
+### htmx conventions
+- htmx is **vendored** (`js/vendor/htmx.min.js`, 2.0.6) — no CDN, works
+  under a strict `script-src 'self'` CSP.
+- Every mutating form carries `hx-disabled-elt="find button[type='submit']"`
+  (blocks double-submit); `.htmx-request` CSS shows the spinner + dim,
+  disabled under `prefers-reduced-motion`.
+- Progressive enhancement: give htmx forms a real `method`/`action` and a
+  `<noscript>` submit so they work without JS.
+- `shell.js` restores focus across `outerHTML` swaps (captured at
+  `htmx:configRequest`, restored at `htmx:afterSettle`, scoped to the swap
+  target so background polls don't steal focus).
+
+### App-tier JS
+| File | Wires |
+|---|---|
+| `js/app/shell.js` | theme toggle + nav collapse (localStorage `vibe-theme`/`vibe-nav`), mobile drawer a11y, `.file-upload-drop` drag-drop, focus restore across htmx swaps |
+| `js/app/modal.js` | the edit-overlay dialog behavior (see above) |
+| `js/vendor/htmx.min.js` | htmx 2.0.6, unmodified |
+
+---
+
+## Known app-specific leftovers
+
+Trimmed in v0.3.0. The StickerVibez-specific classes carried in during
+extraction (`.upload-zone*`, `.upload-preview*`, `.style-tile*`,
+`.discount-input-group`, the `.cart-panel*` "modal", `.style-card*`,
+`.trust-*`) were removed — StickerVibez still ships its own copies, and
+nothing consumed them from the package.

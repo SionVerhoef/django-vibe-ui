@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>django-vibe-ui — app tier showcase</title>
+
+  <!-- Fonts (loaded by your browser, not the server) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- The app-tier stylesheet under test -->
+  <link rel="stylesheet" href="../src/vibe_ui/static/vibe_ui/css/app.css">
+
+  <!-- Stand-in for the Django prepaint include (vibe_ui/prepaint.html) -->
+  <script>
+  (function () {
+    try {
+      var root = document.documentElement;
+      if (localStorage.getItem("vibe-theme") === "dark") root.setAttribute("data-theme", "dark");
+      if (localStorage.getItem("vibe-nav") === "expanded") root.setAttribute("data-nav", "expanded");
+    } catch (e) {}
+  })();
+  </script>
+
+  <style>
+    /* Demo-only: section spacing inside the app content column. */
+    .demo-section h2 { font-size: 13px; color: var(--text-2); margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app">
+    <button class="app-scrim" id="app-scrim" aria-label="Close menu" tabindex="-1"></button>
+
+    <nav class="app-nav" id="app-nav" aria-label="Primary">
+      <a class="nav-brand" href="#">
+        <span class="nav-brand-logo"><span class="nav-brand-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1" fill="var(--accent)"/><rect x="10.3" y="9" width="3.4" height="11" rx="1" fill="var(--accent)"/><rect x="16.6" y="5" width="3.4" height="15" rx="1" fill="var(--accent)"/></svg>
+        </span></span>
+        <span class="nav-brand-name">Vibe App</span>
+      </a>
+
+      <button class="nav-item nav-toggle" id="nav-toggle" type="button" title="Expand or collapse menu" aria-label="Expand or collapse menu">
+        <span class="nav-item-icon">
+          <svg class="nav-icon-burger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="nav-icon-collapse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        </span>
+        <span class="nav-item-label">Collapse</span>
+      </button>
+
+      <a class="nav-item is-active" href="#" title="Dashboard">
+        <span class="nav-item-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+        <span class="nav-item-label">Dashboard</span>
+      </a>
+      <a class="nav-item" href="#" title="Reports">
+        <span class="nav-item-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h3l3 8 4-16 3 8h5"/></svg></span>
+        <span class="nav-item-label">Reports</span>
+      </a>
+
+      <span class="nav-spacer"></span>
+
+      <button class="nav-item" id="theme-toggle" type="button" title="Toggle theme" aria-label="Toggle theme">
+        <span class="nav-item-icon">
+          <svg class="theme-icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
+          <svg class="theme-icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        </span>
+        <span class="nav-item-label">Theme</span>
+      </button>
+
+      <div class="nav-user">
+        <span class="nav-user-avatar-cell"><span class="avatar" title="demo">DE</span></span>
+        <span class="nav-user-meta"><span class="nav-user-name">demo-user</span></span>
+      </div>
+    </nav>
+
+    <div class="app-main">
+      <header class="app-header">
+        <div class="app-header-crumbs">
+          <button class="mobile-nav-toggle" id="mobile-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="app-nav">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+          <h1 class="app-header-title">App tier showcase</h1>
+        </div>
+        <div class="app-header-actions">
+          <button class="btn btn-secondary" id="open-modal-demo" type="button">Open modal</button>
+          <a class="btn btn-primary" href="#">Primary action</a>
+        </div>
+      </header>
+
+      <main class="app-content" id="main" tabindex="-1">
+
+        <div class="alert alert-success">Saved — this is the messages strip.</div>
+
+        <section class="demo-section">
+          <h2>KPI / stat tiles</h2>
+          <div class="kpi-grid">
+            <div class="kpi-tile">
+              <div class="kpi-tile-top"><span class="kpi-label">Avg rate</span><span class="kpi-dot sev-ok"></span></div>
+              <div class="kpi-value-row"><span class="kpi-value">6.2</span><span class="kpi-unit">/ 10 min</span></div>
+              <div class="kpi-target">target ≤ 6</div>
+            </div>
+            <div class="kpi-tile">
+              <div class="kpi-tile-top"><span class="kpi-label">Peak</span><span class="kpi-dot sev-warn"></span></div>
+              <div class="kpi-value-row"><span class="kpi-value">38</span><span class="kpi-unit">/ 10 min</span></div>
+              <div class="kpi-target">target ≤ 20</div>
+            </div>
+            <div class="kpi-tile">
+              <div class="kpi-tile-top"><span class="kpi-label">Floods</span><span class="kpi-dot sev-crit"></span></div>
+              <div class="kpi-value-row"><span class="kpi-value">4</span><span class="kpi-unit">events</span></div>
+              <div class="kpi-target">target 0</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <h2>Toolbar, segmented tabs, pills</h2>
+          <div class="toolbar">
+            <div class="seg-tabs">
+              <a class="seg-tab is-active" href="#">All</a>
+              <a class="seg-tab" href="#">Open</a>
+              <a class="seg-tab" href="#">Closed</a>
+            </div>
+            <span class="toolbar-count"><strong>24</strong> items</span>
+          </div>
+          <p style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+            <span class="pill pill-ok"><span class="dot"></span>Healthy</span>
+            <span class="pill pill-warn"><span class="dot"></span>Degraded</span>
+            <span class="pill pill-crit"><span class="dot"></span>Critical</span>
+            <span class="pill pill-muted">Archived</span>
+            <span class="pill pill-accent">Beta</span>
+            <span class="tag-chip">tag-chip <span class="mono">v2</span></span>
+          </p>
+        </section>
+
+        <section class="demo-section">
+          <h2>Card with row list</h2>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">Recent items <span class="count">3</span></span>
+              <a class="card-link" href="#">View all</a>
+            </div>
+            <ul class="row-list">
+              <li>
+                <div class="row-main">
+                  <div class="row-title"><a class="row-title" href="#">Compressor trips on line 4</a></div>
+                  <div class="row-sub"><span class="sev-crit">critical</span> · updated 2h ago</div>
+                </div>
+                <span class="row-meta">#241</span>
+              </li>
+              <li>
+                <div class="row-main">
+                  <div class="row-title">Sensor drift review</div>
+                  <div class="row-sub"><span class="sev-warn">warning</span> · updated yesterday</div>
+                </div>
+                <span class="row-meta">#238</span>
+              </li>
+              <li class="empty-note" style="display:block">…or an .empty-note when there is nothing yet.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <h2>Data table + meter</h2>
+          <div class="card table-scroll">
+            <table class="data-table">
+              <thead><tr><th>Source</th><th class="num">Count</th><th style="width:30%">Share</th></tr></thead>
+              <tbody>
+                <tr><td>PT-4711</td><td class="num">1,204</td><td><div class="meter"><span style="width:72%"></span></div></td></tr>
+                <tr><td>FT-1002</td><td class="num">311</td><td><div class="meter"><span style="width:19%"></span></div></td></tr>
+                <tr><td>LT-2201</td><td class="num">88</td><td><div class="meter"><span style="width:6%"></span></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="demo-section">
+          <h2>Forms</h2>
+          <div class="card"><div class="card-body">
+            <form onsubmit="return false">
+              <div class="form-group">
+                <label class="form-label form-label-required" for="demo-name">Project name</label>
+                <input class="form-input" id="demo-name" type="text" placeholder="e.g. Refinery north">
+                <p class="form-help">Shown in the nav and reports.</p>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="demo-sev">Severity</label>
+                <select class="form-input" id="demo-sev"><option>Critical</option><option>Warning</option><option>OK</option></select>
+                <div id="demo-sev_error"><p class="form-error">This is a linked field error.</p></div>
+              </div>
+              <div class="form-group">
+                <label class="file-upload-drop" for="demo-file">Drop a CSV here, or browse
+                  <input class="file-upload-input" id="demo-file" type="file"></label>
+              </div>
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Save changes</button>
+                <button class="btn btn-ghost" type="button">Cancel</button>
+                <button class="btn btn-danger" type="button">Delete</button>
+              </div>
+            </form>
+          </div></div>
+        </section>
+
+        <section class="demo-section">
+          <h2>Steps + pagination</h2>
+          <div class="card"><div class="card-body">
+            <ol class="steps">
+              <li><span class="steps-num">1</span><span><strong>Upload</strong> an export from your historian.</span></li>
+              <li><span class="steps-num">2</span><span><strong>Map</strong> the columns once per source.</span></li>
+              <li><span class="steps-num">3</span><span><strong>Read</strong> the scorecard and act on the top offenders.</span></li>
+            </ol>
+          </div></div>
+          <nav class="pagination" aria-label="Pagination" style="margin-top:14px">
+            <a class="btn btn-ghost" href="#">Previous</a>
+            <span>Page 2 of 5</span>
+            <a class="btn btn-ghost" href="#">Next</a>
+          </nav>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div id="modal-root"></div>
+
+  <script src="../src/vibe_ui/static/vibe_ui/js/app/shell.js" defer></script>
+  <script src="../src/vibe_ui/static/vibe_ui/js/app/modal.js" defer></script>
+  <script defer>
+  /* Demo-only: in Django this arrives via htmx (ModalFormMixin →
+     vibe_ui/form_modal.html into #modal-root). Inject the same markup so
+     modal.js's close/trap behavior can be exercised statically. */
+  document.addEventListener("DOMContentLoaded", function () {
+    var opener = document.getElementById("open-modal-demo");
+    opener.addEventListener("click", function () {
+      var root = document.getElementById("modal-root");
+      root.innerHTML =
+        '<div class="modal-scrim"><div class="modal card" role="dialog" aria-modal="true" aria-labelledby="modal-title">' +
+        '<div class="card-head"><h2 class="card-title" id="modal-title">Edit project</h2>' +
+        '<button class="modal-close" type="button" data-modal-close aria-label="Close">' +
+        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>' +
+        '<div class="card-body"><form onsubmit="return false">' +
+        '<div class="form-group"><label class="form-label form-label-required" for="m-name">Name</label>' +
+        '<input class="form-input" id="m-name" type="text" value="Refinery north"></div>' +
+        '<div class="form-actions"><button class="btn btn-primary" type="submit">Save changes</button>' +
+        '<button class="btn btn-ghost" type="button" data-modal-close>Cancel</button></div>' +
+        '</form></div></div></div>';
+      document.body.classList.add("modal-open");
+      root.querySelector("input").focus();
+    });
+  });
+  </script>
+</body>
+</html>

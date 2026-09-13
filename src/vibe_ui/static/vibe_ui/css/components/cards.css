@@ -1,6 +1,6 @@
 /* ===================================================================
    Cards — PixRemix v2.1
-   Style cards, product tiles, trust signal cards
+   Base card, product option tiles, feature pills
    =================================================================== */
 
 /* --- Base Card --- */
@@ -30,56 +30,6 @@
 
 .card-body {
   padding: var(--space-4);
-}
-
-/* --- Style Card (gallery/styles page) --- */
-.style-card {
-  background: var(--surface-white);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--neutral-100);
-  overflow: hidden;
-  transition: all var(--duration-normal) var(--ease-out);
-  cursor: pointer;
-}
-
-.style-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
-}
-
-.style-card-image {
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
-  background: var(--neutral-50);
-}
-
-.style-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--duration-normal) var(--ease-out);
-}
-
-.style-card:hover .style-card-image img {
-  transform: scale(1.05);
-}
-
-.style-card-body {
-  padding: var(--space-4);
-}
-
-.style-card-name {
-  font-family: var(--font-heading);
-  font-weight: var(--weight-semibold);
-  font-size: var(--text-base);
-  color: var(--neutral-900);
-  margin-bottom: var(--space-1);
-}
-
-.style-card-desc {
-  font-size: var(--text-sm);
-  color: var(--neutral-600);
-  margin-bottom: var(--space-3);
 }
 
 /* --- Product Option Tile --- */
@@ -120,63 +70,6 @@
   font-size: var(--text-xs);
   color: var(--neutral-600);
   margin-top: 2px;
-}
-
-/* --- Trust Signal Card --- */
-.trust-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  background: var(--neutral-50);
-  border-radius: var(--radius-md);
-}
-
-.trust-card svg {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  stroke: var(--accent);
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.trust-card-text {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: var(--neutral-900);
-}
-
-/* --- Trust Bar (horizontal row of trust signals) --- */
-.trust-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-6);
-  padding: var(--space-4) 0;
-  flex-wrap: wrap;
-}
-
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: var(--neutral-600);
-  white-space: nowrap;
-}
-
-.trust-item svg {
-  width: 16px;
-  height: 16px;
-  stroke: var(--success);
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 /* --- Feature Pills --- */

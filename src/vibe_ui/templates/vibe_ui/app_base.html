@@ -1,0 +1,111 @@
+{% load static %}<!doctype html>
+{% comment %}
+App-shell skeleton: collapsible icon nav rail + header + scrollable
+content column. Your site's base template EXTENDS this and fills the
+blocks — minimally `title`, `nav_brand` (or just `brand_name`),
+`nav_items`, `page_title`, and `content`. Head extras (favicon, meta,
+analytics) go in `head_meta` / `head_extra`; your theme.css goes in
+`theme_css` so it loads after app.css and wins.
+
+Nav items are plain markup:
+  <a class="nav-item{% if active %} is-active{% endif %}" href="…" title="Label">
+    <span class="nav-item-icon">(svg)</span>
+    <span class="nav-item-label">Label</span>
+  </a>
+Account / sign-in / sign-out entries belong in `nav_user` (below the
+theme toggle), so they stay reachable in the collapsed rail.
+
+Theme + nav state persist in localStorage — vibe_ui/prepaint.html
+applies them before first render, js/app/shell.js wires the buttons.
+The #modal-root slot receives ModalFormMixin edit overlays via htmx.
+{% endcomment %}
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    {% block head_meta %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'vibe_ui/css/app.css' %}">
+    {% block theme_css %}{% endblock %}
+    {% block extra_css %}{% endblock %}
+    {% include "vibe_ui/prepaint.html" %}
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    {% block body_start %}{% endblock %}
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="app">
+        <button class="app-scrim" id="app-scrim" aria-label="Close menu" tabindex="-1"></button>
+
+        <nav class="app-nav" id="app-nav" aria-label="Primary">
+            {% block nav_brand %}
+            <a class="nav-brand" href="/">
+                <span class="nav-brand-logo"><span class="nav-brand-mark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="13" width="3.4" height="7" rx="1" fill="var(--accent)"/><rect x="10.3" y="9" width="3.4" height="11" rx="1" fill="var(--accent)"/><rect x="16.6" y="5" width="3.4" height="15" rx="1" fill="var(--accent)"/></svg>
+                </span></span>
+                <span class="nav-brand-name">{% block brand_name %}{% endblock %}</span>
+            </a>
+            {% endblock %}
+
+            <button class="nav-item nav-toggle" id="nav-toggle" type="button" title="Expand or collapse menu" aria-label="Expand or collapse menu">
+                <span class="nav-item-icon">
+                    <svg class="nav-icon-burger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <svg class="nav-icon-collapse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+                </span>
+                <span class="nav-item-label">Collapse</span>
+            </button>
+
+            {% block nav_items %}{% endblock %}
+
+            <span class="nav-spacer"></span>
+
+            {% block nav_footer %}{% endblock %}
+
+            <button class="nav-item" id="theme-toggle" type="button" title="Toggle theme" aria-label="Toggle theme">
+                <span class="nav-item-icon">
+                    <svg class="theme-icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
+                    <svg class="theme-icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+                </span>
+                <span class="nav-item-label">Theme</span>
+            </button>
+
+            {% block nav_user %}{% endblock %}
+        </nav>
+
+        <div class="app-main">
+            <header class="app-header">
+                <div class="app-header-crumbs">
+                    <button class="mobile-nav-toggle" id="mobile-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="app-nav">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                    {% block header %}
+                    <h1 class="app-header-title">{% block page_title %}{% endblock %}</h1>
+                    {% block header_context %}{% endblock %}
+                    {% endblock %}
+                </div>
+                <div class="app-header-actions">{% block header_actions %}{% endblock %}</div>
+            </header>
+
+            <main class="app-content" id="main" tabindex="-1">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    {# Edit-overlay slot: ModalFormMixin partials land here via htmx. #}
+    <div id="modal-root"></div>
+
+    {# Vendored htmx (no CDN — works under a strict script-src 'self' CSP). #}
+    <script src="{% static 'vibe_ui/js/vendor/htmx.min.js' %}" defer></script>
+    <script src="{% static 'vibe_ui/js/app/shell.js' %}" defer></script>
+    <script src="{% static 'vibe_ui/js/app/modal.js' %}" defer></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

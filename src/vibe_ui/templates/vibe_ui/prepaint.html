@@ -1,0 +1,15 @@
+{% comment %}
+Pre-paint: apply the stored theme/nav-rail state to <html> before first
+render so there is no light-flash or rail width-jump. Include INSIDE
+<head>, after the stylesheets. The keys match js/app/shell.js
+("vibe-theme" / "vibe-nav"). The nonce renders empty when the site runs
+no CSP middleware — harmless.
+{% endcomment %}<script nonce="{{ request.csp_nonce }}">
+(function () {
+  try {
+    var root = document.documentElement;
+    if (localStorage.getItem("vibe-theme") === "dark") root.setAttribute("data-theme", "dark");
+    if (localStorage.getItem("vibe-nav") === "expanded") root.setAttribute("data-nav", "expanded");
+  } catch (e) {}
+})();
+</script>

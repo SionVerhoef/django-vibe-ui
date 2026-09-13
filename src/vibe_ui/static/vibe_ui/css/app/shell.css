@@ -1,0 +1,280 @@
+/* App shell layout: collapsible nav rail + header + scrollable main
+   column (the frame every app page renders inside — see
+   templates/vibe_ui/app_base.html).
+   Nav state lives on <html data-nav="expanded"> so the pre-paint script
+   (templates/vibe_ui/prepaint.html) can apply it before first render
+   (no width jump). */
+
+.app {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* The mobile-menu backdrop is display:none until the mobile block below
+   overlays it — without this base rule it renders as a raw, unstyled
+   <button> stretched to full viewport height: a white strip left of the
+   rail on desktop. */
+.app-scrim { display: none; border: none; padding: 0; background: none; }
+
+/* ── Nav rail ─────────────────────────────────────────────────────── */
+.app-nav {
+  width: var(--nav-w);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+  transition: width .18s ease;
+}
+[data-nav="expanded"] .app-nav { width: var(--nav-w-expanded); }
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  margin-bottom: 6px;
+  color: inherit;
+}
+.nav-brand-logo {
+  width: 64px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-brand-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-brand-name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  margin: 1px 8px;
+  border: none;
+  border-radius: 10px;
+  padding: 0;
+  width: calc(100% - 16px);
+  background: transparent;
+  color: var(--text-2);
+  text-decoration: none;
+  cursor: pointer;
+  text-align: left;
+}
+.nav-item:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.nav-item.is-active {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.nav-item.is-active:hover { color: var(--accent); }
+.nav-item-icon {
+  width: 48px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-item-label {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.nav-item.is-active .nav-item-label { font-weight: 600; }
+
+.nav-toggle { height: 40px; margin-bottom: 6px; }
+
+.nav-spacer { flex: 1; }
+
+/* Collapsed rail: labels (and the brand name) disappear; icons keep
+   their titles for tooltips. */
+.nav-item-label,
+.nav-brand-name,
+.nav-user-meta { display: none; }
+[data-nav="expanded"] .nav-item-label,
+[data-nav="expanded"] .nav-brand-name,
+[data-nav="expanded"] .nav-user-meta { display: block; }
+
+/* Theme toggle shows the icon for the mode you would switch TO. */
+.theme-icon-sun { display: none; }
+[data-theme="dark"] .theme-icon-sun { display: block; }
+[data-theme="dark"] .theme-icon-moon { display: none; }
+/* Collapse toggle: chevron when expanded, burger when collapsed. */
+.nav-icon-collapse { display: none; }
+[data-nav="expanded"] .nav-icon-collapse { display: block; }
+[data-nav="expanded"] .nav-icon-burger { display: none; }
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  height: 52px;
+}
+.nav-user-avatar-cell {
+  width: 64px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.avatar-sm {
+  width: 22px;
+  height: 22px;
+  font-size: 9px;
+}
+.nav-user-meta { min-width: 0; }
+.nav-user-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* ── Main column ──────────────────────────────────────────────────── */
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-header {
+  flex: none;
+  min-height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 var(--pad);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.app-header-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+.app-header-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.crumb {
+  font-size: 12px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+a.crumb:hover { color: var(--text); }
+.crumb-sep { color: var(--border-2); }
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.app-content {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+.app-content > * { flex: none; }
+
+/* Narrow content pages (forms, auth) center a single column. */
+.content-narrow {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────── */
+.mobile-nav-toggle { display: none; }
+
+@media (max-width: 760px) {
+  :root { --pad: 14px; --gap: 12px; }
+
+  /* The rail overlays instead of squeezing the content. */
+  .app-nav {
+    position: fixed;
+    z-index: 40;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--nav-w-expanded);
+    transform: translateX(-100%);
+    transition: transform .18s ease;
+    box-shadow: var(--shadow);
+  }
+  [data-nav-open] .app-nav { transform: translateX(0); }
+  /* Overlay rail is always the expanded variant. */
+  .nav-item-label, .nav-brand-name, .nav-user-meta { display: block; }
+  .nav-icon-collapse { display: block; }
+  .nav-icon-burger { display: none; }
+  .nav-toggle { display: none; }
+
+  .mobile-nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--surface);
+    color: var(--text-2);
+    cursor: pointer;
+  }
+
+  .app-scrim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background: rgba(20, 15, 8, .45);
+    border: none;
+    padding: 0;
+  }
+  [data-nav-open] .app-scrim { display: block; }
+}

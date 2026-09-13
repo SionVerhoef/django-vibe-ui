@@ -41,3 +41,25 @@
   /* --- One-off role override (usually unnecessary) --- */
   /* --border-focus: var(--accent); */
 }
+
+/* ===================================================================
+   App tier (pages that load app.css instead of ui.css)
+   -------------------------------------------------------------------
+   The app tier ships its own light AND dark ramps (_app.css), so a
+   re-brand must override BOTH scopes: a bare :root override wins in
+   light mode but loses to the [data-theme="dark"] block. Dark accents
+   usually need to be brighter (the accent doubles as link text on the
+   dark background) — and a brighter fill usually needs dark ink, so
+   check --text-on-accent clears AA (4.5:1) on YOUR accent per theme.
+   (The default amber happens to keep one ink for both; yours may not.)
+   =================================================================== */
+:root {
+  --accent: #2563EB;
+  --accent-soft: #dbeafe;
+  --text-on-accent: #ffffff;   /* white clears AA on #2563EB */
+}
+[data-theme="dark"] {
+  --accent: #60a5fa;           /* brighter: readable as text on --bg */
+  --accent-soft: #1e3a5f;
+  --text-on-accent: #0b1526;   /* dark ink clears AA on #60a5fa */
+}
